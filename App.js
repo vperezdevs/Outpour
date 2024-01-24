@@ -1,12 +1,16 @@
 //basic expo/react native project setup
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, useColorScheme, View, TextInput, TouchableOpacity, Button } from 'react-native';
+import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, useColorScheme, View, TextInput, TouchableOpacity, Button, Image } from 'react-native';
 
 const App = () => {
     //create sign-in text
     return(
       <View style={styles.container}>
+        <Image style={styles.Logo} source={require('./Assets/Logo_Outpour_Long.png')}/>
         <Text style={styles.title}>Sign In</Text>
+        <Text style= {styles.inputLabelLoggedOut}>Email</Text>
+        <TextInput label="Email" style={styles.input} placeholder="email"/>
+        <Button color="#CADBFC" title="Sign In" accessibilityLabel="Enter Outpour app"/>
         <StatusBar style="auto" />
       </View>
     )
@@ -29,7 +33,17 @@ const styles = StyleSheet.create({
     borderRadius:25,
     height:50,
     
-  }
+  },
+  logo:{
+    width:"200px"
+  },
+  input:{
+    backgroundColor: "#fcfdff",
+  },
+  inputLabelLoggedOut: {
+    color: "#FFF",
+    fontSize: "12px",
+  }, 
 });
 
 export default App;
