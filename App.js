@@ -1,6 +1,7 @@
 //basic expo/react native project setup
 import React, { useState } from 'react';
 import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, useColorScheme, View, TextInput, TouchableOpacity, Button, Image } from 'react-native';
+import Profile from './Profile';
 
 const App = () => {
     //create sign-in text
@@ -10,7 +11,11 @@ const App = () => {
         <Text style={styles.title}>Sign In</Text>
         <Text style= {styles.inputLabelLoggedOut}>Email</Text>
         <TextInput label="Email" style={styles.input} placeholder="email"/>
+        <Text style= {styles.inputLabelLoggedOut}>Password</Text>
+        <TextInput label="password" style={styles.input} placeholder="password"/>
+        <View style={{ marginTop: 20 }}>
         <Button color="#CADBFC" title="Sign In" accessibilityLabel="Enter Outpour app"/>
+        </View>
         <StatusBar style="auto" />
       </View>
     )
@@ -43,6 +48,7 @@ const styles = StyleSheet.create({
   inputLabelLoggedOut: {
     color: "#FFF",
     fontSize: "12px",
+    marginTop: "10px"
   }, 
 });
 
