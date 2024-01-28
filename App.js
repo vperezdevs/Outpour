@@ -3,6 +3,9 @@ import { StyleSheet, View, Button, Image, TextInput, Text, StatusBar } from 'rea
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Profile from './Profile';
+import Signup from './Signup';
+import Forgot from './Forgot';
+import Home from './Home';
 
 // Separate SignInScreen Component
 const SignInScreen = ({ navigation }) => {
@@ -15,11 +18,27 @@ const SignInScreen = ({ navigation }) => {
       <Text style={styles.inputLabelLoggedOut}>Password</Text>
       <TextInput label="password" style={styles.input} placeholder="password" />
       <View style={{ marginTop: 20 }}>
-        <Button
+        <Button //Signin
           color="#CADBFC"
           title="Sign In"
           accessibilityLabel="Enter Outpour app"
-          onPress={() => navigation.navigate('Profile')}
+          onPress={() => navigation.navigate('Home')}
+        />
+      </View>
+      <View style={{ marginTop: 20 }}>
+        <Button //Sign Up
+          color="#CADBFC"
+          title="Sign Up"
+          accessibilityLabel="Sign Up"
+          onPress={() => navigation.navigate('Signup')}
+        />
+      </View>
+      <View style={{ marginTop: 20 }}>
+        <Button //Forgot
+          color="#CADBFC"
+          title="I Forgot My Password"
+          accessibilityLabel="Forgot Password"
+          onPress={() => navigation.navigate('Forgot')}
         />
       </View>
       <StatusBar style="auto" />
@@ -34,7 +53,9 @@ function MyStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="SignIn" component={SignInScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
+      <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} /> 
+      <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+      <Stack.Screen name="Forgot" component={Forgot} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
