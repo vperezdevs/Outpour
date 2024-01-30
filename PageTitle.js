@@ -7,7 +7,7 @@ const PageTitle = ({ title, showBackButton, backgroundColor }) => {
       <View style={styles.row}>
       <View style={styles.backButtonCol}>
         {showBackButton && (<TouchableOpacity onPress={() => console.log('Go back')}>
-            <Text style={styles.backButton}>Back</Text>
+            <Text style={styles.backButton}>&lt; Back</Text>
           </TouchableOpacity>
           
         )}

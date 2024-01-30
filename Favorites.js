@@ -4,26 +4,12 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import BottomNavBar from './BottomNavBar';
 import PageTitle from './PageTitle';
 
-const Search = () => {
+const Favorites = () => {
   return (
     <View style={styles.container}>
       {/* Header with Heading */}
       <View>
-      <PageTitle title="Search" showBackButton={false} backgroundColor="#BE4621" />
-    </View>
-
-      {/* Search Bar */}
-      <View style={styles.searchContainer}>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search..."
-        // Add any additional TextInput props or styling here
-      />
-      <Icon name="search" size={20} color="gray" style={styles.searchIcon} />
-        <TouchableOpacity style={styles.filterButton}>
-          {/* Placeholder icon for filtering */}
-          <Icon name="filter" size={20} color="white" style={styles.filterIcon} />
-        </TouchableOpacity>
+        <PageTitle title="Favorites" showBackButton={true} backgroundColor="#BE4621" />
       </View>
 
       {/* Clickable Cards */}
@@ -50,7 +36,8 @@ const Search = () => {
 
         {/* Add similar blocks for Card 3 to Card 6 */}
       </View>
-<BottomNavBar activeLink="search" />
+
+      <BottomNavBar activeLink="Profile" />
     </View>
   );
 };
@@ -74,24 +61,6 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 20,
     fontWeight: 'bold',
-  },searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-    position: 'relative', // Make the container relative for absolute positioning
-  },
-  searchInput: {
-    flex: 1,
-    height: 40,
-    borderColor: 'white',
-    color: 'white',
-    borderWidth: 1,
-    paddingLeft: 30, // Adjust padding to make space for the icon
-    borderRadius: 5,
-  },
-  searchIcon: {
-    position: 'absolute',
-    right: 70, // Adjust the left position to align the icon as needed
   },
   buttonText: {
     color: 'white',
@@ -107,15 +76,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   cardContainer: {
-    flexDirection: 'row',
     justifyContent: 'space-between',
   },
   card: {
-    flex: 1,
     marginBottom: 10,
-    borderRadius: 10,
-    marginRight: 20,
+    borderRadius: 2,
     overflow: 'hidden',
+    borderColor: '#ffffff', // Your desired inner glow color
+    boxShadow: '0 0 10px rgba(0, 0, 255, 0.5)',
   },
   cardImage: {
     width: '100%',
@@ -124,8 +92,7 @@ const styles = StyleSheet.create({
   cardText: {
     padding: 10,
     textAlign: 'center',
-    backgroundColor: 'red',
-    color:'white'
+    color: 'white',
   },
   bottomNavBar: {
     backgroundColor: '#1E1E1E',
@@ -141,11 +108,11 @@ const styles = StyleSheet.create({
   navItem: {
     flex: 1,
     alignItems: 'center',
-    paddingBottom:20,
+    paddingBottom: 20,
   },
   navItemText: {
     color: '#ffffff',
   },
 });
 
-export default Search;
+export default Favorites;
