@@ -2,16 +2,16 @@ import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import BottomNavBar from './BottomNavBar';
+import PageTitle from './PageTitle';
 
 const Search = () => {
   return (
     <View style={styles.container}>
       {/* Header with Heading */}
-      <View style={styles.header}>
-        <View style={styles.orangeStrip}>
-          <Text style={styles.heading}>Search</Text>
-        </View>
-      </View>
+      <View>
+      <PageTitle title="Search" showBackButton={false} backgroundColor="#BE4621" />
+      {/* Your page content goes here */}
+    </View>
 
       {/* Search Bar */}
       <View style={styles.searchContainer}>
