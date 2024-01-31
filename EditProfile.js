@@ -1,34 +1,29 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
-import BottomNavBar from './BottomNavBar';
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 const EditProfile = () => {
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
-      <View style={styles.container}>
-        {/* Header with Back Button */}
-        <TouchableOpacity onPress={() => console.log('Go back')}>
-          <Text style={styles.backButton}>&lt; Back</Text>
-        </TouchableOpacity>
+    <View style={styles.container}>
+      {/* Header with Back Button */}
+      <TouchableOpacity onPress={() => console.log('Go back')}>
+  <Text style={styles.backButton}>&lt;Back</Text>
+</TouchableOpacity>
 
-        {/* Stacked Input Boxes */}
-        <View style={styles.inputContainer}>
-          {renderInput('Full Name')}
-          {renderInput('Username')}
-          {renderInput('Email')}
-          {renderInput('Phone Number')}
-          {renderInput('Country')}
-          {renderInput('Gender')}
-        </View>
 
-        {/* Update Button */}
-        <TouchableOpacity style={styles.updateButton} onPress={() => console.log('Update')}>
-          <Text style={styles.updateButtonText}>Update</Text>
-        </TouchableOpacity>
+      {/* Stacked Input Boxes */}
+      <View style={styles.inputContainer}>
+        {renderInput('Full Name')}
+        {renderInput('Username')}
+        {renderInput('Email')}
+        {renderInput('Phone Number')}
+        {renderInput('Country')}
+        {renderInput('Gender')}
       </View>
-      
-      <BottomNavBar activeLink="search" />
-    </ScrollView>
+      {/* Update Button */}
+      <TouchableOpacity style={styles.updateButton} onPress={() => console.log('Update')}>
+        <Text style={styles.updateButtonText}>Update</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -42,13 +37,10 @@ const renderInput = (label) => {
 };
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-  },
   container: {
     flex: 1,
     backgroundColor: '#1E1E1E',
-    color: 'white',
+    color:'white',
     padding: 20,
   },
   backButton: {
@@ -86,7 +78,6 @@ const styles = StyleSheet.create({
     padding: 15,
     alignItems: 'center',
     borderRadius: 5,
-    marginBottom: 40,
   },
   updateButtonText: {
     color: 'black', // Adjust color as needed

@@ -3,7 +3,7 @@ import { StyleSheet, View, Button, Image, TextInput, Text, StatusBar } from 'rea
 const Signup = ({ navigation }) => {
     return (
       <View style={styles.container}>
-        <Image style={styles.logo} source={require('./Assets/Logo_Outpour_Long.png')} /> 
+        <Image style={styles.logo} source={require('./assets/Logo_Outpour_Long.png')} />
         <Text style={styles.title}>Sign Up</Text>
         <Text style={styles.inputLabelLoggedOut}>Email</Text>
         <TextInput label="Email" style={styles.input} placeholder="email" />
@@ -16,7 +16,7 @@ const Signup = ({ navigation }) => {
             color="#CADBFC"
             title="Sign Up"
             accessibilityLabel="Sign Up"
-            onPress={() => navigation.navigate('Profile')}
+            onPress={() => navigation.navigate('Home')}
           />
         </View>
         <StatusBar style="auto" />

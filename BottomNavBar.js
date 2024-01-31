@@ -2,17 +2,26 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-const BottomNavBar = ({ activeLink }) => {
+const BottomNavBar = ({ activeLink, navigation }) => {
   return (
     <View style={styles.bottomNavBar}>
-      <TouchableOpacity style={[styles.navItem, activeLink === 'home' && styles.activeNavItem]}>
-        <Text style={[styles.navItemText, activeLink === 'home' && styles.activeNavItemText]}>Home</Text>
+      <TouchableOpacity
+        style={[styles.navItem, activeLink === 'Home' && styles.activeNavItem]}
+        onPress={() => navigation.navigate('Home')} // Navigate to Home screen
+      >
+        <Text style={[styles.navItemText, activeLink === 'Home' && styles.activeNavItemText]}>Home</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.navItem, activeLink === 'search' && styles.activeNavItem]}>
-        <Text style={[styles.navItemText, activeLink === 'search' && styles.activeNavItemText]}>Search</Text>
+      <TouchableOpacity
+        style={[styles.navItem, activeLink === 'Search' && styles.activeNavItem]}
+        onPress={() => navigation.navigate('Search')} // Navigate to Search screen
+      >
+        <Text style={[styles.navItemText, activeLink === 'Search' && styles.activeNavItemText]}>Search</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.navItem, activeLink === 'profile' && styles.activeNavItem]}>
-        <Text style={[styles.navItemText, activeLink === 'profile' && styles.activeNavItemText]}>Profile</Text>
+      <TouchableOpacity
+        style={[styles.navItem, activeLink === 'Profile' && styles.activeNavItem]}
+        onPress={() => navigation.navigate('Profile')} // Navigate to Profile screen
+      >
+        <Text style={[styles.navItemText, activeLink === 'Profile' && styles.activeNavItemText]}>Profile</Text>
       </TouchableOpacity>
     </View>
   );

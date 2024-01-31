@@ -4,13 +4,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import BottomNavBar from './BottomNavBar';
 import PageTitle from './PageTitle';
 
-const Search = () => {
+const Search = ( {navigation} ) => {
   return (
     <View style={styles.container}>
       {/* Header with Heading */}
-      <View>
-      <PageTitle title="Search" showBackButton={false} backgroundColor="#BE4621" />
-    </View>
 
       {/* Search Bar */}
       <View style={styles.searchContainer}>
@@ -50,7 +47,7 @@ const Search = () => {
 
         {/* Add similar blocks for Card 3 to Card 6 */}
       </View>
-<BottomNavBar activeLink="search" />
+      <BottomNavBar activeLink="Search" navigation={navigation} />
     </View>
   );
 };
@@ -58,7 +55,6 @@ const Search = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
     backgroundColor: '#1E1E1E',
   },
   header: {
@@ -74,7 +70,8 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 20,
     fontWeight: 'bold',
-  },searchContainer: {
+  },
+  searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
@@ -86,12 +83,14 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     color: 'white',
     borderWidth: 1,
+    marginTop: 10,
     paddingLeft: 30, // Adjust padding to make space for the icon
     borderRadius: 5,
+    marginLeft: 10,
   },
   searchIcon: {
     position: 'absolute',
-    right: 70, // Adjust the left position to align the icon as needed
+    right: 50, // Adjust the left position to align the icon as needed
   },
   buttonText: {
     color: 'white',
@@ -114,8 +113,8 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: 10,
     borderRadius: 10,
-    marginRight: 20,
     overflow: 'hidden',
+    margin: 10,
   },
   cardImage: {
     width: '100%',

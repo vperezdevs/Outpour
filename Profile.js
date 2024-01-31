@@ -1,18 +1,24 @@
 //basic expo/react native project setup
 import React from 'react';
 import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View, TouchableOpacity, Button, Image } from 'react-native';
+import BottomNavBar from './BottomNavBar';
 
-const Profile = () => {
+const Profile = ( {navigation} ) => {
 
   const handleLinkPress = (linkName) => {
     console.log(`Link ${linkName} was pressed!`); // Replace with your actual navigation or other actions
+    if (linkName === 'Reviews') {
+      navigation.navigate('UserReviews'); // Navigate to UserReviews when "Reviews" is clicked
+    } else if (linkName === 'Alerts'){
+      navigation.navigate('UserAlerts');
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <Text style={styles.title}>John Doe</Text>
-        <Image style={styles.profilePicture} source={require('./Assets/Profile Picture Persona.png')} />
+        <Image style={styles.profilePicture} source={require('./assets/Profile Picture Persona.png')} />
         <View style={styles.editProfileButton}>
           <Button color="#CADBFC" title="Edit Profile" accessibilityLabel="Customize Profile"/>
         </View>
@@ -26,7 +32,7 @@ const Profile = () => {
           ))}
         </View>
       </ScrollView>
-      <StatusBar style="auto" />
+      <BottomNavBar activeLink="Profile" navigation={navigation} />
     </SafeAreaView>
   );
 };
@@ -38,7 +44,6 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     alignItems: 'center',
-    paddingTop: 20,
   },
   title: {
     color: '#FFF',
