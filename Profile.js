@@ -12,7 +12,7 @@ const Profile = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <Text style={styles.title}>John Doe</Text>
-        <Image style={styles.profilePicture} source={require('./assets/Profile Picture Persona.png')} />
+        <Image style={styles.profilePicture} source={require('./Assets/Profile Picture Persona.png')} />
         <View style={styles.editProfileButton}>
           <Button color="#CADBFC" title="Edit Profile" accessibilityLabel="Customize Profile"/>
         </View>

@@ -6,12 +6,13 @@ import Profile from './Profile';
 import Signup from './Signup';
 import Forgot from './Forgot';
 import Home from './Home';
+import Favorites from './Favorites';
 
 // Separate SignInScreen Component
 const SignInScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Image style={styles.logo} source={require('./assets/Logo_Outpour_Long.png')} />
+      <Image style={styles.logo} source={require('./Assets/Logo_Outpour_Long.png')} />
       <Text style={styles.title}>Sign In</Text>
       <Text style={styles.inputLabelLoggedOut}>Email</Text>
       <TextInput label="Email" style={styles.input} placeholder="email" />
@@ -31,6 +32,14 @@ const SignInScreen = ({ navigation }) => {
           title="Sign Up"
           accessibilityLabel="Sign Up"
           onPress={() => navigation.navigate('Signup')}
+        />
+      </View>
+      <View style={{ marginTop: 20 }}>
+        <Button //Forgot
+          color="#CADBFC"
+          title="Favorites"
+          accessibilityLabel="Favorites"
+          onPress={() => navigation.navigate('Favorites')}
         />
       </View>
       <View style={{ marginTop: 20 }}>
@@ -56,9 +65,11 @@ function MyStack() {
       <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} /> 
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
       <Stack.Screen name="Forgot" component={Forgot} options={{ headerShown: false }} />
+      <Stack.Screen name="Favorites" component={Favorites} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
+
 
 // App Component
 function App() {
