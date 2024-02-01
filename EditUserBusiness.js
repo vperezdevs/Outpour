@@ -13,7 +13,7 @@ const EditUserBusiness = () => {
 
         {/* Image */}
         <Image
-          source={require('./Assets/Cover_Wallys.jpg')} // Change the path to your actual image
+          source={require('./assets/Cover_Wallys.jpg')} // Change the path to your actual image
           style={styles.image}
           resizeMode="cover"
         />

@@ -2,17 +2,31 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View, TouchableOpacity, Button, Image } from 'react-native';
 import BottomNavBar from './BottomNavBar';
+import EditProfile from './EditProfile';
 
 const Profile = ( {navigation} ) => {
 
   const handleLinkPress = (linkName) => {
     console.log(`Link ${linkName} was pressed!`); // Replace with your actual navigation or other actions
     if (linkName === 'Reviews') {
-      navigation.navigate('UserReviews'); // Navigate to UserReviews when "Reviews" is clicked
+      navigation.navigate('UserReviews') // Navigate to UserReviews when "Reviews" is clicked
     } else if (linkName === 'Alerts'){
-      navigation.navigate('UserAlerts');
+      navigation.navigate('UserAlerts')
+    } else if (linkName === 'Favorites'){
+      navigation.navigate('Favorites')
+    } else if (linkName === 'My Business'){
+      navigation.navigate('UserBusiness')
+    } else if (linkName === 'Friends'){
+      navigation.navigate('Friends')
+    } else if (linkName === 'Settings'){
+      navigation.navigate('Settings')
     }
+
   };
+
+  const handleEditProfilePress = () => {
+    navigation.navigate('EditProfile');
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -20,7 +34,7 @@ const Profile = ( {navigation} ) => {
         <Text style={styles.title}>John Doe</Text>
         <Image style={styles.profilePicture} source={require('./assets/Profile Picture Persona.png')} />
         <View style={styles.editProfileButton}>
-          <Button color="#CADBFC" title="Edit Profile" accessibilityLabel="Customize Profile"/>
+          <Button color="#CADBFC" title="Edit Profile" accessibilityLabel="Customize Profile" onPress={handleEditProfilePress}/>
         </View>
         <View style={styles.linksContainer}>
           {['My Business', 'Favorites', 'Alerts', 'Friends', 'Reviews', 'Settings'].map((item, index) => (
@@ -44,6 +58,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     alignItems: 'center',
+    marginTop: 40
   },
   title: {
     color: '#FFF',

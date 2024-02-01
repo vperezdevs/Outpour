@@ -10,6 +10,11 @@ import BusinessPage from './BusinessPage';
 import Search from './Search';
 import UserReviews from './UserReviews';
 import UserAlerts from './UserAlerts';
+import Favorites from './Favorites';
+import UserBusiness from './UserBusiness';
+import EditProfile from './EditProfile';
+import Friends from './Friends';
+import Settings from './Settings';
 
 // Separate SignInScreen Component
 const SignInScreen = ({ navigation }) => {
@@ -56,7 +61,7 @@ const Stack = createNativeStackNavigator();
 function MyStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="SignIn" component={SignInScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="SignInScreen" component={SignInScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} /> 
       <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
       <Stack.Screen name="Forgot" component={Forgot} options={{ headerShown: false }} />
@@ -65,6 +70,11 @@ function MyStack() {
       <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
       <Stack.Screen name="UserReviews" component={UserReviews} options={{ headerShown: false }} />
       <Stack.Screen name="UserAlerts" component={UserAlerts} options={{ headerShown: false }} />
+      <Stack.Screen name="Favorites" component={Favorites} options={{ headerShown: false }} />
+      <Stack.Screen name="UserBusiness" component={UserBusiness} options={{ headerShown: false }} />
+      <Stack.Screen name="EditProfile" component={EditProfile} options={{ headerShown: false }} />
+      <Stack.Screen name="Friends" component={Friends} options={{ headerShown: false }} />
+      <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }

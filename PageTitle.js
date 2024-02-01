@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
-const PageTitle = ({ title, showBackButton, backgroundColor }) => {
+const PageTitle = ({ title, showBackButton, backgroundColor, navigation }) => {
   return (
     <View style={[styles.pageTitle, { backgroundColor: backgroundColor }]}>
       <View style={styles.row}>
-      <View style={styles.backButtonCol}>
-        {showBackButton && (<TouchableOpacity onPress={() => console.log('Go back')}>
-            <Text style={styles.backButton}>Back</Text>
-          </TouchableOpacity>
-          
-        )}
+        <View style={styles.backButtonCol}>
+          {showBackButton && (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Text style={styles.backButton}>Back</Text>
+            </TouchableOpacity>
+          )}
         </View>
         <View style={styles.center}>
           <Text style={styles.heading}>{title}</Text>
@@ -20,6 +20,7 @@ const PageTitle = ({ title, showBackButton, backgroundColor }) => {
     </View>
   );
 };
+
 
 const styles = {
   pageTitle: {

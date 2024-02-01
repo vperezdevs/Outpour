@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import PageTitle from './PageTitle';
 
-const EditProfile = () => {
+const EditProfile = ({navigation}) => {
   return (
     <View style={styles.container}>
       {/* Header with Back Button */}
-      <TouchableOpacity onPress={() => console.log('Go back')}>
-  <Text style={styles.backButton}>&lt;Back</Text>
-</TouchableOpacity>
+      <View style={styles.pageTitleContainer}>
+        <PageTitle title="Edit Profile" showBackButton={true} backgroundColor="#EB9F05" navigation={navigation} />
+      </View>
 
 
       {/* Stacked Input Boxes */}
@@ -41,13 +42,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#1E1E1E',
     color:'white',
-    padding: 20,
-  },
-  backButton: {
-    color: 'white', // Adjust color as needed
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 20,
   },
   profileImage: {
     width: 150,
@@ -57,6 +51,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginBottom: 20,
+    margin: 20
   },
   inputBox: {
     marginBottom: 15,
@@ -78,6 +73,7 @@ const styles = StyleSheet.create({
     padding: 15,
     alignItems: 'center',
     borderRadius: 5,
+    margin: 40,
   },
   updateButtonText: {
     color: 'black', // Adjust color as needed

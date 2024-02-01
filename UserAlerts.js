@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
+import PageTitle from './PageTitle';
+import BottomNavBar from './BottomNavBar';
 
-const Alerts = () => {
+const Alerts = ({navigation}) => {
   // Placeholder data for the alerts
   const alerts = [
     { id: '1', type: 'friend_request', user: 'Lee Murphy', timestamp: '1h ago', userProfilePic: 'path/to/LeeMurphyPic.png' },
@@ -37,11 +39,18 @@ const Alerts = () => {
   // Render the list of alerts
   return (
     <View style={styles.container}>
+        <PageTitle 
+        title="User Reviews" // Set the title you want
+        showBackButton={true} // Determine based on your navigation structure
+        backgroundColor="#333" // Set the color you prefer
+        navigation={navigation} // Pass the navigation prop
+      />
       <FlatList
         data={alerts}
         renderItem={({ item }) => <AlertItem alert={item} />}
         keyExtractor={item => item.id}
       />
+      <BottomNavBar activeLink="Profile" navigation={navigation} />
     </View>
   );
 };
@@ -50,7 +59,6 @@ const Alerts = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
   },
   alertItem: {
     flexDirection: 'row',

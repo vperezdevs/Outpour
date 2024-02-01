@@ -3,12 +3,11 @@ import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'reac
 import Icon from 'react-native-vector-icons/FontAwesome';
 import BottomNavBar from './BottomNavBar';
 import PageTitle from './PageTitle';
+import BusinessPage from './BusinessPage';
 
 const Search = ( {navigation} ) => {
   return (
     <View style={styles.container}>
-      {/* Header with Heading */}
-
       {/* Search Bar */}
       <View style={styles.searchContainer}>
       <TextInput
@@ -26,9 +25,9 @@ const Search = ( {navigation} ) => {
       {/* Clickable Cards */}
       <View style={styles.cardContainer}>
         {/* Card 1 */}
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('BusinessPage')}>
           <Image
-            source={require('./Assets/Cover_Wallys.jpg')}
+            source={require('./assets/Cover_Wallys.jpg')}
             style={styles.cardImage}
             resizeMode="cover"
           />
@@ -36,9 +35,9 @@ const Search = ( {navigation} ) => {
         </TouchableOpacity>
 
         {/* Card 2 */}
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('BusinessPage')}>
           <Image
-            source={require('./Assets/favicon.png')}
+            source={require('./assets/favicon.png')}
             style={styles.cardImage}
             resizeMode="cover"
           />
