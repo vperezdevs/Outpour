@@ -4,12 +4,8 @@ import PageTitle from './PageTitle';
 import { CommonActions } from '@react-navigation/native'; // Import CommonActions
 
 const Settings = ({navigation}) => {
-  const [darkMode, setDarkMode] = useState(false);
   const [notifications, setNotifications] = useState(false);
 //placeholders for darkmode and notifications
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
 
   const toggleNotifications = () => {
     setNotifications(!notifications);
@@ -27,7 +23,7 @@ const Settings = ({navigation}) => {
 
 
   const renderInput = (label, value, onToggle) => {
-    if (label === 'Dark Mode' || label === 'Notifications') {
+    if (label === 'Notifications') {
       return (
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>{label}</Text>
@@ -67,7 +63,6 @@ const Settings = ({navigation}) => {
         {renderInput('Location', false, () => {})} {/* Placeholder for Location */}
         {renderInput('Notifications', notifications, toggleNotifications)}
         {renderInput('Language', false, () => {})} {/* Placeholder for Language */}
-        {renderInput('Dark Mode', darkMode, toggleDarkMode)}
         {renderInput('Log Out', false, () => {})} {/* Placeholder for Log Out */}
       </View>
     </View>

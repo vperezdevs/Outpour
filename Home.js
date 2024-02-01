@@ -17,14 +17,16 @@ const Home = ({ navigation }) => {
           userName: 'John Doe',
           userProfilePic: './assets/Profile Picture Persona.png',
           reviewDate: 'Jan 20, 2024',
-          reviewContent: 'Great place, loved the ambiance!'
+          reviewContent: 'Great place, loved the ambiance!',
+          reviewLocation: 'Wally`s Liquors'
       },
       {
         id: 2,
         userName: 'Joana Summit',
         userProfilePic: './assets/friend1.jpg',
         reviewDate: 'Jan 22, 2024',
-        reviewContent: 'Pretty solid place, even better atmosphere!'
+        reviewContent: 'Pretty solid place, even better atmosphere!',
+        reviewLocation: 'Tori Tori'
       },
       //more reviews
   ];
@@ -85,6 +87,7 @@ const Home = ({ navigation }) => {
                 showsHorizontalScrollIndicator={true}
             >
                 {reviews.map((review) => (
+                <TouchableOpacity onPress={() => navigation.navigate('BusinessPage')}>
                     <View key={review.id} style={styles.reviewBox}>
                         <View style={styles.reviewHeader}>
                             <View style={styles.reviewUser}>
@@ -94,7 +97,9 @@ const Home = ({ navigation }) => {
                             <Text style={styles.reviewDate}>{review.reviewDate}</Text>
                         </View>
                         <Text style={styles.reviewContent}>{review.reviewContent}</Text>
+                        <Text style={styles.reviewLocation}>{review.reviewLocation}</Text>
                     </View>
+                    </TouchableOpacity>
                 ))}
             </ScrollView>
         </>
@@ -135,6 +140,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'red',
     },
+    reviewLocation: {
+        fontSize: 12, // Small font size
+        color: 'grey', // Less prominent color
+        marginTop: 5, // Space from the review content
+      },
     businessBox: {
         width: 200,
         height: 250,

@@ -3,12 +3,12 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, StyleSheet 
 import BottomNavBar from './BottomNavBar';
 import PageTitle from './PageTitle';
 
-const EditUserBusiness = () => {
+const EditUserBusiness = ({navigation}) => {
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
       <View style={styles.container}>
         <View>
-          <PageTitle title="My Business" showBackButton={true} backgroundColor="#EB9F05" />
+          <PageTitle title="My Business" showBackButton={true} backgroundColor="#EB9F05" navigation={navigation} />
         </View>
 
         {/* Image */}
@@ -32,12 +32,12 @@ const EditUserBusiness = () => {
         </View>
 
         {/* Update Button */}
-        <TouchableOpacity style={styles.updateButton} onPress={() => console.log('Update')}>
+        <TouchableOpacity style={styles.updateButton} onPress={() => navigation.navigate('UserBusiness')}>
           <Text style={styles.updateButtonText}>Update</Text>
         </TouchableOpacity>
       </View>
 
-      <BottomNavBar activeLink="search" />
+      <BottomNavBar activeLink="Profile" />
     </ScrollView>
   );
 };
@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#1E1E1E',
     color: 'white',
-    padding: 20,
   },
   backButton: {
     color: 'white',
@@ -88,7 +87,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   inputContainer: {
-    marginBottom: 20,
+    margin: 20,
   },
   inlineInputContainer: {
     flexDirection: 'row',
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: "#FF8A8A",
     borderWidth: 1,
     padding: 10,
     backgroundColor: 'black',
@@ -117,11 +116,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#CADBFC',
     padding: 15,
     alignItems: 'center',
-    borderRadius: 5,
-    marginBottom: 40,
+    borderWidth: 3,
+    borderRadius: 10,
+    borderColor: "#AAC6FD",
+    backgroundColor: "black",
+    margin: 40,
   },
   updateButtonText: {
-    color: 'black',
+    color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
   },

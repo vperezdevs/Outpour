@@ -60,26 +60,6 @@ const Search = ( {navigation} ) => {
           />
           <Text style={styles.cardText}>Wallys</Text>
         </TouchableOpacity>
-
-        {/* Card 6 */}
-        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('BusinessPage')}>
-          <Image
-            source={require('./assets/Cover_Wallys.jpg')}
-            style={styles.cardImage}
-            resizeMode="cover"
-          />
-          <Text style={styles.cardText}>Wallys</Text>
-        </TouchableOpacity>
-                {/* Card 6 */}
-                <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('BusinessPage')}>
-          <Image
-            source={require('./assets/Cover_WillsPub.png')}
-            style={styles.cardImage}
-            resizeMode="cover"
-          />
-          <Text style={styles.cardText}>Will's Pub</Text>
-        </TouchableOpacity>
-        {/* Add similar blocks for Card 3 to Card 6 */}
       </View>
       </ScrollView>
       <BottomNavBar activeLink="Search" navigation={navigation} />
@@ -162,8 +142,8 @@ const styles = StyleSheet.create({
   cardText: {
     padding: 10,
     textAlign: 'center',
-    backgroundColor: 'red',
-    color:'white'
+    backgroundColor: "#AAC6FD",
+    color:'black'
   },
   bottomNavBar: {
     backgroundColor: '#1E1E1E',

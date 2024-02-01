@@ -151,8 +151,8 @@ const styles = StyleSheet.create({
   cardText: {
     padding: 10,
     textAlign: 'center',
-    backgroundColor: 'red',
-    color:'white'
+    backgroundColor: "#AAC6FD",
+    color:'black'
   },
   bottomNavBar: {
     backgroundColor: '#1E1E1E',

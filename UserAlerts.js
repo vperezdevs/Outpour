@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: 'grey',
+    borderColor: "#AAC6FD",
   },
   userProfilePic: {
     width: 50,
