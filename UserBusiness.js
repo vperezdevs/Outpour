@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, TextInput, Button, SafeAreaView } from 'react-native';
 import PageTitle from './PageTitle';
 import BottomNavBar from './BottomNavBar';
+import Slider from '@react-native-community/slider';
 
 const UserBusiness = ({ navigation }) => {
     // Placeholder data
@@ -9,15 +10,15 @@ const UserBusiness = ({ navigation }) => {
         name: 'Business Name',
         address: '123 Business St, City',
         rating: 4.7,
-        bannerImage: 'https://via.placeholder.com/400x300',
-        mapImage: 'https://via.placeholder.com/400x200?text=Map',
+        bannerImage: './assets/Business_Banner.png',
+        mapImage: './assets/Map_Graphic.png',
     };
 
     const reviews = [
         {
             id: 1,
             userName: 'John Doe',
-            userProfilePic: 'https://via.placeholder.com/50',
+            userProfilePic: './assets/Profile Picture Persona.png',
             reviewDate: 'Jan 20, 2024',
             reviewContent: 'Great place, loved the ambiance!',
             rating: 4.5,
@@ -54,6 +55,7 @@ const UserBusiness = ({ navigation }) => {
                     {/* Map Placeholder */}
                     <TouchableOpacity style={styles.mapPlaceholder}>
                         <Image source={{ uri: businessDetails.mapImage }} style={styles.mapImage} />
+                        <View style={styles.overlay} />
                         <Text style={styles.mapText}>Map</Text>
                     </TouchableOpacity>
 
@@ -70,34 +72,63 @@ const UserBusiness = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                     {activeSection === 'rating' && (
-                        <View>
-                            {/* Placeholder for rating */}
-                            <Text>Rating section coming soon...</Text>
+                            <View style={styles.sliderContainer}>
+                            <Slider
+                                style={styles.slider}
+                                minimumValue={1}
+                                maximumValue={5}
+                                minimumTrackTintColor="#FFFFFF"
+                                maximumTrackTintColor="#FFFFFF"
+                                step={0.5}
+                                value={5}
+                            />
+                            <Text>
+                                <Text style ={styles.reviewText}>Users rate this bar highly for its ambiance and customer service.</Text>
+                            </Text>
                         </View>
                     )}
 
-                    {activeSection === 'reviews' && (
+{activeSection === 'reviews' && (
+                <View>
+            {reviews.map((review) => (
+                <View key={review.id} style={styles.reviewBox}>
+                    <View style={styles.reviewHeader}>
+                        <Image source={{ uri: review.userProfilePic }} style={styles.userProfilePic} />
                         <View>
-                            {reviews.map((review) => (
-                                <View key={review.id} style={styles.reviewBox}>
-                                    <View style={styles.reviewHeader}>
-                                        <Image source={{ uri: review.userProfilePic }} style={styles.userProfilePic} />
-                                        <View>
-                                            <Text style={styles.userName}>{review.userName}</Text>
-                                            <Text style={styles.reviewDate}>{review.reviewDate}</Text>
-                                        </View>
-                                    </View>
-                                    <Text style={styles.reviewContent}>{review.reviewContent}</Text>
-                                    <Text style={styles.reviewRating}>{`${review.rating} ★`}</Text>
-                                </View>
-                            ))}
+                            <Text style={styles.userName}>{review.userName}</Text>
+                            <Text style={styles.reviewDate}>{review.reviewDate}</Text>
                         </View>
-                    )}
+                    </View>
+                    <Text style={styles.reviewContent}>{review.reviewContent}</Text>
+                    <Slider
+                                style={styles.slider}
+                                minimumValue={1}
+                                maximumValue={5}
+                                minimumTrackTintColor="#FFFFFF"
+                                maximumTrackTintColor="#FFFFFF"
+                                step={0.5}
+                                value={5}
+                            />
+                </View>
+            ))}
+            </View>
+            )}
                     {activeSection === 'rate' && (
                         <View>
                             <TextInput style={styles.rateInput} placeholder="Write your review..." />
-                            <TextInput style={styles.rateInput} placeholder="Your rating (1-5)" keyboardType="numeric" />
-                            <Button title="Submit Review" onPress={() => { /* Submit action here */ }} />
+                            <View style={styles.sliderContainer}>
+                                <Slider
+                                    style={styles.slider}
+                                    minimumValue={1}
+                                    maximumValue={5}
+                                    minimumTrackTintColor="#FFFFFF"
+                                    maximumTrackTintColor="#FFFFFF"
+                                    step={0.5}
+                                    value={5}
+                                /></View>
+                                    <TouchableOpacity style={styles.submitButton} onPress={() => { /* Submit action here */ }}>
+                                <Text style={styles.submitButtonText}>Submit</Text>
+                            </TouchableOpacity>
                         </View>
                     )}
                 </ScrollView>
@@ -110,7 +141,20 @@ const UserBusiness = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#1E1E1E',
+        color: '#ffffff',
+    },
+    sliderContainer: {
+        alignItems: 'center', // Center items horizontally
+        justifyContent: 'center', // Center items vertically
+    },
+    reviewText: {
+        justifyContent: 'center',
+        color: '#ffffff',
+    },
+    slider:{
+        width: 300,
+        height: 40,
     },
     contentContainer: {
         flex: 1, // Ensures the container takes up the whole screen
@@ -129,36 +173,43 @@ const styles = StyleSheet.create({
     businessDetailsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 10,
+        padding: 15,
         // Add more styles as needed
     },
     businessInfo: {
         // Add more styles as needed
+        color: '#ffffff',
     },
     businessName: {
         fontWeight: 'bold',
         fontSize: 24,
+        color: '#ffffff',
         // Add more styles as needed
     },
     businessAddress: {
         // Add more styles as needed
+        color: '#ffffff',
     },
     businessRating: {
         // Add more styles as needed
+        color: '#ffffff',
     },
     mapPlaceholder: {
         borderRadius: 10,
         overflow: 'hidden',
         position: 'relative',
-        margin: 10,
+        margin: 15,
         // Add more styles as needed
     },
     mapImage: {
         width: '100%',
-        height: 200,
-        opacity: 0.7,
+        height: 150,
         // Add more styles as needed
     },
+    overlay: {
+        ...StyleSheet.absoluteFillObject, // Make the overlay fill the entire container
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Dark color with 50% opacity
+      },
     mapText: {
         position: 'absolute',
         top: '50%',
@@ -171,6 +222,11 @@ const styles = StyleSheet.create({
     navBar: {
         flexDirection: 'row',
         justifyContent: 'space-around',
+        backgroundColor: '#ffffff',
+        borderRadius:5,
+        margin:15,
+        borderColor:'black',
+        borderWidth:3
         // Add more styles as needed
     },
     navBarItem: {
@@ -178,11 +234,14 @@ const styles = StyleSheet.create({
         // Add more styles as needed
     },
     reviewBox: {
-        padding: 10,
+        padding: 15,
+        margin: '0 15 15 15',
+        color: '#ffffff',
         // Add more styles as needed
     },
     reviewHeader: {
         flexDirection: 'row',
+        Color: '#ffffff'
         // Add more styles as needed
     },
     userProfilePic: {
@@ -194,23 +253,40 @@ const styles = StyleSheet.create({
     },
     userName: {
         fontWeight: 'bold',
+        color: '#ffffff'
         // Add more styles as needed
     },
     reviewDate: {
         // Add more styles as needed
+        color: '#ffffff'
     },
     reviewContent: {
         // Add more styles as needed
+        color: '#ffffff'
     },
     reviewRating: {
         // Add more styles as needed
+        color: '#ffffff'
     },
     rateInput: {
         borderWidth: 1,
-        borderColor: 'grey',
+        borderColor: 'white',
         margin: 10,
         padding: 10,
+        color: '#ffffff',
+        margin:15
         // Add more styles as needed
+    },
+    submitButton: {
+        backgroundColor: '#CADBFC', // Adjust color as needed
+        padding: 15,
+        alignItems: 'center',
+        borderRadius: 5,
+        margin: 15,
+    },
+    submitButtonText:{    color: 'black', // Adjust color as needed
+    fontSize: 16,
+    fontWeight: 'bold',
     },
     bottomNavBar: {
         // If you have specific styles for your BottomNavBar, add them here

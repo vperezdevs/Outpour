@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import BottomNavBar from './BottomNavBar';
 import PageTitle from './PageTitle';
@@ -8,7 +8,7 @@ import BusinessPage from './BusinessPage';
 const Search = ( {navigation} ) => {
   return (
     <View style={styles.container}>
-      {/* Search Bar */}
+      {/* Search Bar */}      <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
       <View style={styles.searchContainer}>
       <TextInput
         style={styles.searchInput}
@@ -21,7 +21,6 @@ const Search = ( {navigation} ) => {
           <Icon name="filter" size={20} color="white" style={styles.filterIcon} />
         </TouchableOpacity>
       </View>
-
       {/* Clickable Cards */}
       <View style={styles.cardContainer}>
         {/* Card 1 */}
@@ -34,18 +33,56 @@ const Search = ( {navigation} ) => {
           <Text style={styles.cardText}>Wallys</Text>
         </TouchableOpacity>
 
-        {/* Card 2 */}
+        {/* Card 3 */}
         <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('BusinessPage')}>
           <Image
-            source={require('./assets/favicon.png')}
+            source={require('./assets/Cover_WillsPub.png')}
             style={styles.cardImage}
             resizeMode="cover"
           />
-          <Text style={styles.cardText}>Card 2</Text>
+          <Text style={styles.cardText}>Will's Pub</Text>
         </TouchableOpacity>
 
+        {/* Card 4 */}
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('BusinessPage')}>
+          <Image
+            source={require('./assets/Cover_WillsPub.png')}
+            style={styles.cardImage}
+            resizeMode="cover"
+          />
+          <Text style={styles.cardText}>Will's Pub</Text>
+        </TouchableOpacity>
+                {/* Card 5 */}
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('BusinessPage')}>
+          <Image
+            source={require('./assets/Cover_Wallys.jpg')}
+            style={styles.cardImage}
+            resizeMode="cover"
+          />
+          <Text style={styles.cardText}>Wallys</Text>
+        </TouchableOpacity>
+
+        {/* Card 6 */}
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('BusinessPage')}>
+          <Image
+            source={require('./assets/Cover_Wallys.jpg')}
+            style={styles.cardImage}
+            resizeMode="cover"
+          />
+          <Text style={styles.cardText}>Wallys</Text>
+        </TouchableOpacity>
+                {/* Card 6 */}
+                <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('BusinessPage')}>
+          <Image
+            source={require('./assets/Cover_WillsPub.png')}
+            style={styles.cardImage}
+            resizeMode="cover"
+          />
+          <Text style={styles.cardText}>Will's Pub</Text>
+        </TouchableOpacity>
         {/* Add similar blocks for Card 3 to Card 6 */}
       </View>
+      </ScrollView>
       <BottomNavBar activeLink="Search" navigation={navigation} />
     </View>
   );
@@ -75,6 +112,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
     position: 'relative', // Make the container relative for absolute positioning
+  },
+  scrollContainer: {
+    flexGrow: 1,
   },
   searchInput: {
     flex: 1,
@@ -106,14 +146,15 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     flexDirection: 'row',
+    flexWrap: 'wrap', // Allow cards to wrap to the next row
     justifyContent: 'space-between',
+    margin: 10,
   },
   card: {
-    flex: 1,
+    width: '48%', // Set the width to 48% to allow for some margin between cards
     marginBottom: 10,
     borderRadius: 10,
     overflow: 'hidden',
-    margin: 10,
   },
   cardImage: {
     width: '100%',

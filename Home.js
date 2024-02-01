@@ -7,22 +7,22 @@ import { NavigationContainer } from '@react-navigation/native';
 const Home = ({ navigation }) => {
     const localBusinesses = [
         // Add your local businesses data here. Example:
-        { id: 1, name: 'Business 1', location: 'Location 1', imageUrl: 'https://example.com/image1.jpg' },
-        { id: 2, name: 'Business 2', location: 'Location 2', imageUrl: 'https://example.com/image2.jpg' },
+        { id: 1, name: 'Business 1', location: 'Location 1', imageUrl: './assets/Home_Recommended_1.png' },
+        { id: 2, name: 'Business 2', location: 'Location 2', imageUrl: './assets/Cover_WillsPub.png' },
         // ... more businesses
     ];
     const reviews = [
       {
           id: 1,
           userName: 'John Doe',
-          userProfilePic: 'https://example.com/user1.jpg',
+          userProfilePic: './assets/Profile Picture Persona.png',
           reviewDate: 'Jan 20, 2024',
           reviewContent: 'Great place, loved the ambiance!'
       },
       {
         id: 2,
-        userName: 'Jane Doe',
-        userProfilePic: 'https://example.com/user2.jpg',
+        userName: 'Joana Summit',
+        userProfilePic: './assets/friend1.jpg',
         reviewDate: 'Jan 22, 2024',
         reviewContent: 'Pretty solid place, even better atmosphere!'
       },
@@ -38,7 +38,11 @@ const Home = ({ navigation }) => {
             >
                 {Array.from({ length: 5 }).map((_, index) => (
                     <View key={index} style={styles.box}>
-                        <Text>Item {index + 1}</Text>
+                        <Image 
+                        source={require('./assets/Home_Banner1.png')} // Adjust the path to where your image is located
+                        style={styles.imageStyle} // Style your image
+                        resizeMode="stretch"
+                        />
                     </View>
                 ))}
             </ScrollView>
@@ -204,7 +208,11 @@ const styles = StyleSheet.create({
   },
   BottomNavBar: {
     paddingTop: 75,
-  }
+  },
+  imageStyle: {
+    width: '100%',
+    height: 200, 
+  },
 });
 
 export default Home;

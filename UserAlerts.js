@@ -6,9 +6,8 @@ import BottomNavBar from './BottomNavBar';
 const Alerts = ({navigation}) => {
   // Placeholder data for the alerts
   const alerts = [
-    { id: '1', type: 'friend_request', user: 'Lee Murphy', timestamp: '1h ago', userProfilePic: 'path/to/LeeMurphyPic.png' },
-    { id: '2', type: 'like', user: 'Ray Arnold', timestamp: '2h ago', userProfilePic: 'path/to/RayArnoldPic.png' },
-    // Add more alerts as needed
+    { id: '1', type: 'friend_request', user: 'Lee Murphy', timestamp: '1h ago', userProfilePic: './assets/friend2.jpg' },
+    { id: '2', type: 'like', user: 'Ray Arnold', timestamp: '2h ago', userProfilePic: './assets/friend3.jpg' },
   ];
 
   // Render each individual alert item
@@ -22,12 +21,12 @@ const Alerts = ({navigation}) => {
           </Text>
           {alert.type === 'friend_request' && (
             <View style={styles.buttonGroup}>
-              <TouchableOpacity style={styles.acceptButton}>
-                <Text>Accept</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.declineButton}>
-                <Text>Decline</Text>
-              </TouchableOpacity>
+  <TouchableOpacity style={styles.acceptButton}>
+    <Text style={styles.buttonText}>Accept</Text>
+  </TouchableOpacity>
+  <TouchableOpacity style={styles.declineButton}>
+    <Text style={styles.buttonText}>Decline</Text>
+  </TouchableOpacity>
             </View>
           )}
           <Text style={styles.timestamp}>{alert.timestamp}</Text>
@@ -40,9 +39,9 @@ const Alerts = ({navigation}) => {
   return (
     <View style={styles.container}>
         <PageTitle 
-        title="User Reviews" // Set the title you want
+        title="User Alerts" // Set the title you want
         showBackButton={true} // Determine based on your navigation structure
-        backgroundColor="#333" // Set the color you prefer
+        backgroundColor="#BE4621" // Set the color you prefer
         navigation={navigation} // Pass the navigation prop
       />
       <FlatList
@@ -59,6 +58,7 @@ const Alerts = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#1E1E1E',
   },
   alertItem: {
     flexDirection: 'row',
@@ -75,23 +75,31 @@ const styles = StyleSheet.create({
   alertContent: {
     flex: 1,
     justifyContent: 'center',
+    color: '#ffffff',
   },
   alertText: {
     fontSize: 14,
     marginBottom: 10,
+    color: '#ffffff',
   },
   buttonGroup: {
     flexDirection: 'row',
     marginBottom: 10,
   },
+  buttonText: {
+    color: '#ffffff',
+  },
   acceptButton: {
     marginRight: 10,
-    backgroundColor: 'green',
+    backgroundColor: '#E95744',
+    color: '#ffffff',
     padding: 10,
     borderRadius: 5,
   },
   declineButton: {
-    backgroundColor: 'red',
+    borderColor: 'white', // Add border color
+    borderWidth: 1, // Add border width
+    color: '#ffffff',
     padding: 10,
     borderRadius: 5,
   },

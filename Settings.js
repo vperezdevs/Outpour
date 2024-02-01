@@ -61,7 +61,7 @@ const Settings = ({navigation}) => {
     <View style={styles.container}>
       {/* Header with Heading */}
       <View>
-        <PageTitle title="Settings" showBackButton={true} backgroundColor="#BE4621" />
+        <PageTitle title="Settings" showBackButton={true} backgroundColor="#BE4621" navigation={navigation} />
       </View>
 
       {/* Stacked Input Boxes */}

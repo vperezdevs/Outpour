@@ -2,14 +2,15 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Dimensions} from 'react-native';
 import PageTitle from './PageTitle';
 import BottomNavBar from './BottomNavBar';
+import Slider from '@react-native-community/slider';
 
 const screenWidth = Dimensions.get('window').width
 
 const UserReviews = ({navigation}) => {
   // Placeholder data for the reviews
   const reviews = [
-    { id: '1', establishment: 'Bar 1', rating: 4 },
-    { id: '2', establishment: 'Bar 2', rating: 3 },
+    { id: '1', establishment: 'Tori Tori', rating: 4 },
+    { id: '2', establishment: 'Wills Pub', rating: 3 },
     // Add more reviews as needed
   ];
   // Render each individual review item
@@ -17,7 +18,16 @@ const UserReviews = ({navigation}) => {
     return (
       <View style={styles.reviewItem}>
         <View style={styles.reviewContent}>
-          <Text style={styles.reviewText}>Eventually, sliders will be added here with back-end data. For now, you gave this establishment a five star review.</Text>
+        <Slider
+          style={styles.slider}
+          minimumValue={1}
+          maximumValue={5}
+          minimumTrackTintColor="#FFFFFF"
+          maximumTrackTintColor="#FFFFFF"
+          step={0.5}
+          value={5}
+          />
+          <Text style={styles.establishmentName}>Placeholder text for a user's review!</Text>
           <Text style={styles.establishmentName}>{review.establishment}</Text>
         </View>
         <TouchableOpacity style={styles.changeRatingButton}>
@@ -33,7 +43,7 @@ const UserReviews = ({navigation}) => {
       <PageTitle 
         title="User Reviews"
         showBackButton={true}
-        backgroundColor="#333"
+        backgroundColor="#BE4621"
         navigation={navigation}
       />
       <FlatList
@@ -52,7 +62,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1, // Make sure container takes up the whole screen
     justifyContent: 'space-between', // This pushes the BottomNavBar to the bottom
-    backgroundColor: '#fff', // Adjust the background color as needed
+    backgroundColor: '#1E1E1E', // Adjust the background color as needed
   },
     reviewItem: {
       flexDirection: 'row',
@@ -61,7 +71,6 @@ const styles = StyleSheet.create({
       borderBottomWidth: 1,
       borderBottomColor: 'grey',
       paddingBottom: 30,
-      width: screenWidth - 40, // Subtracting the total horizontal padding
       paddingLeft: 20,
       marginTop: 10
     },
@@ -69,8 +78,8 @@ const styles = StyleSheet.create({
       flex: 1, // Take up all available space except for what's needed for the button
     },
     establishmentName: {
-      fontSize: 14,
-      color: 'blue', // Change color as needed
+      fontSize: 16,
+      color: 'white', // Change color as needed
       marginBottom: 4, // Space between establishment name and review text
     },
     reviewText: {
