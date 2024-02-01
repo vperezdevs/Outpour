@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 const Home = ({ navigation }) => {
     const localBusinesses = [
-        // Add your local businesses data here. Example:
+        // Add local businesses data here
         { id: 1, name: 'Business 1', location: 'Location 1', imageUrl: './assets/Home_Recommended_1.png' },
         { id: 2, name: 'Business 2', location: 'Location 2', imageUrl: './assets/Cover_WillsPub.png' },
         // ... more businesses
@@ -39,8 +39,8 @@ const Home = ({ navigation }) => {
                 {Array.from({ length: 5 }).map((_, index) => (
                     <View key={index} style={styles.box}>
                         <Image 
-                        source={require('./assets/Home_Banner1.png')} // Adjust the path to where your image is located
-                        style={styles.imageStyle} // Style your image
+                        source={require('./assets/Home_Banner1.png')}
+                        style={styles.imageStyle}
                         resizeMode="stretch"
                         />
                     </View>
@@ -65,7 +65,7 @@ const Home = ({ navigation }) => {
                     <TouchableOpacity 
                         key={business.id} 
                         style={styles.businessBox}
-                        onPress={() => navigation.navigate("BusinessPage")} // Navigate to BusinessPage with params
+                        onPress={() => navigation.navigate("BusinessPage")}
                     >
                         <Image source={{ uri: business.imageUrl }} style={styles.businessImage} />
                         <Text style={styles.businessName}>{business.name}</Text>
@@ -136,16 +136,16 @@ const styles = StyleSheet.create({
         color: 'red',
     },
     businessBox: {
-        width: 200, // Set as needed
-        height: 250, // Set as needed
-        backgroundColor: '#1E1E1E', // Example color
+        width: 200,
+        height: 250,
+        backgroundColor: '#1E1E1E',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 10, // Add space between items
+        margin: 10,
     },
     businessImage: {
-        width: 180, // Set as needed
-        height: 180, // Set as needed
+        width: 180,
+        height: 180,
         backgroundColor: 'skyblue',
     },
     businessName: {
@@ -172,12 +172,11 @@ const styles = StyleSheet.create({
         color: "#fcfdff",
     },
     reviewBox: {
-        width: 300, // Set as needed
+        width: 300,
         backgroundColor: "#fcfdff",
-        borderRadius: 8, // Optional: for rounded corners
-        padding: 10, // Internal padding
-        margin: 20, // Space between items
-        // ... more styling
+        borderRadius: 8,
+        padding: 10,
+        margin: 20,
     },
     reviewHeader: {
         flexDirection: 'row',
@@ -191,7 +190,7 @@ const styles = StyleSheet.create({
     userProfilePic: {
         width: 40,
         height: 40,
-        borderRadius: 20, // Makes the image round
+        borderRadius: 20,
         marginRight: 8,
         backgroundColor: 'skyblue',
     },
@@ -204,7 +203,6 @@ const styles = StyleSheet.create({
     },
     reviewContent: {
         fontSize: 14,
-        // ... more styling
   },
   BottomNavBar: {
     paddingTop: 75,

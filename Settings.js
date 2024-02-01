@@ -6,15 +6,13 @@ import { CommonActions } from '@react-navigation/native'; // Import CommonAction
 const Settings = ({navigation}) => {
   const [darkMode, setDarkMode] = useState(false);
   const [notifications, setNotifications] = useState(false);
-
+//placeholders for darkmode and notifications
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
-    // You can perform additional actions when Dark Mode is toggled
   };
 
   const toggleNotifications = () => {
     setNotifications(!notifications);
-    // You can perform additional actions when Notifications are toggled
   };
 
   const handleLogout = () => {
@@ -22,7 +20,7 @@ const Settings = ({navigation}) => {
     navigation.dispatch(
       CommonActions.reset({
         index: 0,
-        routes: [{ name: 'SignInScreen' }], // Replace 'InitialRouteName' with the name of your initial route
+        routes: [{ name: 'SignInScreen' }],
       })
     );
   };

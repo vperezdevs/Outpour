@@ -44,7 +44,7 @@ const Signup = ({ navigation }) => {
       height: 50,
     },
     logo: {
-      width: 300, // Changed from "200px" to 200 (React Native uses numbers for pixel values)
+      width: 300,
       height: 110
     },
     input: {
@@ -52,8 +52,8 @@ const Signup = ({ navigation }) => {
     },
     inputLabelLoggedOut: {
       color: "#FFF",
-      fontSize: 12, // Changed from "12px" to 12
-      marginTop: 10, // Changed from "10px" to 10
+      fontSize: 12,
+      marginTop: 10,
     },
   });
 

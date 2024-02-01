@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     margin: 30,
     borderRadius: 2,
     overflow: 'hidden',
-    borderColor: '#ffffff', // Your desired inner glow color
+    borderColor: '#ffffff',
     boxShadow: 'rgb(121, 149, 255) 0px 0px 16px 4px',
     position: 'relative',
   },
@@ -95,9 +95,7 @@ const styles = StyleSheet.create({
     right: 10,
   },
   bottomNavBar: {
-    // If you have specific styles for BottomNavBar, define them here
   },
-  // ... Other styles remain the same ...
 });
 
 export default Favorites;

@@ -23,7 +23,6 @@ const UserBusiness = ({ navigation }) => {
             reviewContent: 'Great place, loved the ambiance!',
             rating: 4.5,
         },
-        // ... more reviews
     ];
 
     const [activeSection, setActiveSection] = useState('reviews');
@@ -145,8 +144,8 @@ const styles = StyleSheet.create({
         color: '#ffffff',
     },
     sliderContainer: {
-        alignItems: 'center', // Center items horizontally
-        justifyContent: 'center', // Center items vertically
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     reviewText: {
         justifyContent: 'center',
@@ -157,41 +156,39 @@ const styles = StyleSheet.create({
         height: 40,
     },
     contentContainer: {
-        flex: 1, // Ensures the container takes up the whole screen
+        flex: 1, 
     },
     scrollView: {
-        // Styles for your ScrollView
+
     },
     pageTitleContainer: {
-        // Styles for page title container
+
     },
     bannerImage: {
         width: '100%',
-        height: '33%', // Adjust as needed
-        // Add more styles as needed
+        height: '33%', 
+
     },
     businessDetailsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         padding: 15,
-        // Add more styles as needed
+
     },
     businessInfo: {
-        // Add more styles as needed
+
         color: '#ffffff',
     },
     businessName: {
         fontWeight: 'bold',
         fontSize: 24,
         color: '#ffffff',
-        // Add more styles as needed
+
     },
     businessAddress: {
-        // Add more styles as needed
         color: '#ffffff',
     },
     businessRating: {
-        // Add more styles as needed
         color: '#ffffff',
     },
     mapPlaceholder: {
@@ -199,25 +196,22 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         position: 'relative',
         margin: 15,
-        // Add more styles as needed
     },
     mapImage: {
         width: '100%',
         height: 150,
-        // Add more styles as needed
     },
     overlay: {
-        ...StyleSheet.absoluteFillObject, // Make the overlay fill the entire container
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Dark color with 50% opacity
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
       },
     mapText: {
         position: 'absolute',
         top: '50%',
         left: '50%',
-        transform: [{ translateX: -25 }, { translateY: -10 }], // Adjust based on your text length
+        transform: [{ translateX: -25 }, { translateY: -10 }],
         color: '#fff',
         fontWeight: 'bold',
-        // Add more styles as needed
     },
     navBar: {
         flexDirection: 'row',
@@ -227,45 +221,36 @@ const styles = StyleSheet.create({
         margin:15,
         borderColor:'black',
         borderWidth:3
-        // Add more styles as needed
     },
     navBarItem: {
         padding: 10,
-        // Add more styles as needed
     },
     reviewBox: {
         padding: 15,
         margin: '0 15 15 15',
         color: '#ffffff',
-        // Add more styles as needed
     },
     reviewHeader: {
         flexDirection: 'row',
         Color: '#ffffff'
-        // Add more styles as needed
     },
     userProfilePic: {
         width: 50,
         height: 50,
         borderRadius: 25,
         marginRight: 10,
-        // Add more styles as needed
     },
     userName: {
         fontWeight: 'bold',
         color: '#ffffff'
-        // Add more styles as needed
     },
     reviewDate: {
-        // Add more styles as needed
         color: '#ffffff'
     },
     reviewContent: {
-        // Add more styles as needed
         color: '#ffffff'
     },
     reviewRating: {
-        // Add more styles as needed
         color: '#ffffff'
     },
     rateInput: {
@@ -275,23 +260,20 @@ const styles = StyleSheet.create({
         padding: 10,
         color: '#ffffff',
         margin:15
-        // Add more styles as needed
     },
     submitButton: {
-        backgroundColor: '#CADBFC', // Adjust color as needed
+        backgroundColor: '#CADBFC',
         padding: 15,
         alignItems: 'center',
         borderRadius: 5,
         margin: 15,
     },
-    submitButtonText:{    color: 'black', // Adjust color as needed
+    submitButtonText:{    color: 'black', 
     fontSize: 16,
     fontWeight: 'bold',
     },
     bottomNavBar: {
-        // If you have specific styles for your BottomNavBar, add them here
     },
-    // Add more styles as needed
 });
 
 export default UserBusiness;

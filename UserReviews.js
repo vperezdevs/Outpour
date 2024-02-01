@@ -47,7 +47,7 @@ const UserReviews = ({navigation}) => {
         navigation={navigation}
       />
       <FlatList
-        style={{ flex: 1 }} // Add flex: 1 here
+        style={{ flex: 1 }}
         data={reviews}
         renderItem={({ item }) => <ReviewItem review={item} />}
         keyExtractor={item => item.id}
@@ -57,12 +57,11 @@ const UserReviews = ({navigation}) => {
   );
 };
 
-// Styling for the component
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Make sure container takes up the whole screen
+    flex: 1,
     justifyContent: 'space-between', // This pushes the BottomNavBar to the bottom
-    backgroundColor: '#1E1E1E', // Adjust the background color as needed
+    backgroundColor: '#1E1E1E',
   },
     reviewItem: {
       flexDirection: 'row',
@@ -75,29 +74,25 @@ const styles = StyleSheet.create({
       marginTop: 10
     },
     reviewContent: {
-      flex: 1, // Take up all available space except for what's needed for the button
+      flex: 1,
     },
     establishmentName: {
       fontSize: 16,
-      color: 'white', // Change color as needed
-      marginBottom: 4, // Space between establishment name and review text
+      color: 'white', 
+      marginBottom: 4, 
     },
     reviewText: {
-      fontSize: 12, // Adjust font size as needed
-      color: 'grey', // Change color as needed
-      marginBottom: 10, // Space between review text and bottom of the box
+      fontSize: 12, 
+      color: 'grey',
+      marginBottom: 10, 
     },
   changeRatingButton: {
-    backgroundColor: 'lightgrey', // Change background color as needed
+    backgroundColor: 'lightgrey',
     borderRadius: 15,
     marginTop: 50,
     paddingVertical: 10,
     paddingHorizontal: 10,
   },
-  // Add more styles if needed
 });
 
 export default UserReviews;
-
-//make changerating do stuff
-//make bar 1 and bar 2 clickable

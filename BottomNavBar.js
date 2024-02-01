@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   activeNavItemText: {
-    color: '#0D99FF', // Set the text color for the active link
-    fontWeight: 'bold', // Optional: Add fontWeight for emphasis
+    color: '#0D99FF',
+    fontWeight: 'bold',
   },
 });
 

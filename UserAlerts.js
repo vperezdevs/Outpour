@@ -39,10 +39,10 @@ const Alerts = ({navigation}) => {
   return (
     <View style={styles.container}>
         <PageTitle 
-        title="User Alerts" // Set the title you want
-        showBackButton={true} // Determine based on your navigation structure
-        backgroundColor="#BE4621" // Set the color you prefer
-        navigation={navigation} // Pass the navigation prop
+        title="User Alerts"
+        showBackButton={true}
+        backgroundColor="#BE4621" 
+        navigation={navigation}
       />
       <FlatList
         data={alerts}
@@ -54,7 +54,6 @@ const Alerts = ({navigation}) => {
   );
 };
 
-// Styling for the component
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -97,8 +96,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   declineButton: {
-    borderColor: 'white', // Add border color
-    borderWidth: 1, // Add border width
+    borderColor: 'white',
+    borderWidth: 1,
     color: '#ffffff',
     padding: 10,
     borderRadius: 5,
@@ -107,7 +106,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: 'grey',
   },
-  // ... more styles ...
 });
 
 export default Alerts;

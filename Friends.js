@@ -59,12 +59,12 @@ const styles = StyleSheet.create({
   },
   friendContainer: {
     marginBottom: 15,
-    height: 60, // Adjust the height as needed
+    height: 60,
   },
   friendContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: '100%', // Take up the entire height of the friendContainer
+    height: '100%',
     borderColor: 'gray',
     borderWidth: 1,
     backgroundColor: 'black',

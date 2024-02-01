@@ -33,7 +33,7 @@ const styles = {
   },
   center: {
     flex: 1,
-    alignItems: 'center', // Center the title horizontally
+    alignItems: 'center',
   },
   heading: {
     color: '#ffffff',

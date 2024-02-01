@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
-    position: 'relative', // Make the container relative for absolute positioning
+    position: 'relative',
   },
   scrollContainer: {
     flexGrow: 1,
@@ -111,13 +111,13 @@ const styles = StyleSheet.create({
     color: 'white',
     borderWidth: 1,
     marginTop: 10,
-    paddingLeft: 30, // Adjust padding to make space for the icon
+    paddingLeft: 30,
     borderRadius: 5,
     marginLeft: 10,
   },
   searchIcon: {
     position: 'absolute',
-    right: 50, // Adjust the left position to align the icon as needed
+    right: 50,
   },
   buttonText: {
     color: 'white',
@@ -134,12 +134,12 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap', // Allow cards to wrap to the next row
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
     margin: 10,
   },
   card: {
-    width: '48%', // Set the width to 48% to allow for some margin between cards
+    width: '48%',
     marginBottom: 10,
     borderRadius: 10,
     overflow: 'hidden',

@@ -66,14 +66,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   profilePicture: {
-    width: 150, // Set your own width
-    height: 150, // Set your own height
-    borderRadius: 75, // Adjust for roundness
+    width: 150,
+    height: 150,
+    borderRadius: 75,
     marginTop: 20,
     marginBottom: 20,
   },
   editProfileButton: {
-    marginBottom: 40, // Space between button and links
+    marginBottom: 40,
   },
   linksContainer: {
     width: '100%',
@@ -82,14 +82,14 @@ const styles = StyleSheet.create({
   linkItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20, // Space between items
+    marginBottom: 20,
   },
   iconPlaceholder: {
-    width: 30, // Set your own width
-    height: 30, // Set your own height
-    backgroundColor: '#555', // Placeholder color
-    borderRadius: 15, // Adjust for roundness
-    marginRight: 10, // Space between icon and text
+    width: 30,
+    height: 30,
+    backgroundColor: '#555',
+    borderRadius: 15,
+    marginRight: 10,
   },
   linkText: {
     color: '#FFF',

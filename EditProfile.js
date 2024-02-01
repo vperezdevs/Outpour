@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   labelText: {
     fontSize: 12,
-    color: 'white', // Adjust color as needed
+    color: 'white',
     marginBottom: 5,
   },
   input: {
@@ -69,14 +69,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   updateButton: {
-    backgroundColor: '#CADBFC', // Adjust color as needed
+    backgroundColor: '#CADBFC',
     padding: 15,
     alignItems: 'center',
     borderRadius: 5,
     margin: 40,
   },
   updateButtonText: {
-    color: 'black', // Adjust color as needed
+    color: 'black',
     fontSize: 16,
     fontWeight: 'bold',
   },

@@ -13,7 +13,7 @@ const EditUserBusiness = () => {
 
         {/* Image */}
         <Image
-          source={require('./assets/Cover_Wallys.jpg')} // Change the path to your actual image
+          source={require('./assets/Cover_Wallys.jpg')}
           style={styles.image}
           resizeMode="cover"
         />
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   backButton: {
-    color: 'white', // Adjust color as needed
+    color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 20,
@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   image: {
-    width: '100%', // Adjust width as needed
-    height: 200, // Adjust height as needed
+    width: '100%',
+    height: 200,
     marginBottom: 20,
   },
   inputContainer: {
@@ -96,14 +96,14 @@ const styles = StyleSheet.create({
   },
   inputBox: {
     marginBottom: 15,
-    flex: 1, // Take full width
+    flex: 1,
   },
   inlineInputBox: {
-    marginLeft: 5, // Add some space between City and State
+    marginLeft: 5,
   },
   labelText: {
     fontSize: 12,
-    color: 'white', // Adjust color as needed
+    color: 'white',
     marginBottom: 5,
   },
   input: {
@@ -114,14 +114,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   updateButton: {
-    backgroundColor: '#CADBFC', // Adjust color as needed
+    backgroundColor: '#CADBFC',
     padding: 15,
     alignItems: 'center',
     borderRadius: 5,
     marginBottom: 40,
   },
   updateButtonText: {
-    color: 'black', // Adjust color as needed
+    color: 'black',
     fontSize: 16,
     fontWeight: 'bold',
   },
