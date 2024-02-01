@@ -50,7 +50,7 @@ const Home = ({ navigation }) => {
             {/* Header for Recommended section */}
             <View style={styles.recommendedHeader}>
                 <Text style={styles.recommendedText}>Recommended for you</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Favorites')}>
+                <TouchableOpacity onPress={() => navigation.navigate('ViewAll')}>
                     <Text style={styles.viewAllText}>View All</Text>
                 </TouchableOpacity>
             </View>

@@ -15,6 +15,7 @@ import UserBusiness from './UserBusiness';
 import EditProfile from './EditProfile';
 import Friends from './Friends';
 import Settings from './Settings';
+import ViewAll from './ViewAll';
 
 // Separate SignInScreen Component
 const SignInScreen = ({ navigation }) => {
@@ -75,6 +76,7 @@ function MyStack() {
       <Stack.Screen name="EditProfile" component={EditProfile} options={{ headerShown: false }} />
       <Stack.Screen name="Friends" component={Friends} options={{ headerShown: false }} />
       <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
+      <Stack.Screen name="ViewAll" component={ViewAll} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
