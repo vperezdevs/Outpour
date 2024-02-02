@@ -27,7 +27,7 @@ import Friends from "./Friends";
 import Settings from "./Settings";
 import ViewAll from "./ViewAll";
 import EditUserBusiness from "./EditUserBusiness";
-import { TouchableOpacity } from "react-native-web";
+import { TouchableOpacity } from "react-native";
 
 // Separate SignInScreen Component
 const SignInScreen = ({ navigation }) => {
@@ -57,22 +57,21 @@ const SignInScreen = ({ navigation }) => {
           accessibilityLabel="Enter Outpour app"
           onPress={() => navigation.navigate("Home")}
         >
-          Sign-In
+         <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>
         <TouchableOpacity //Sign Up
           style={styles.button_blue}
           accessibilityLabel="Sign Up"
           onPress={() => navigation.navigate("Signup")}
         >
-          Sign Up
+          <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
 
         <TouchableOpacity //Forgot
           style={styles.button_red}
           accessibilityLabel="Forgot Password"
           onPress={() => navigation.navigate("Forgot")}
-        >
-          Forgot Password
+        ><Text style={styles.buttonText}>Forgot Password</Text>
         </TouchableOpacity>
       </View>
       <StatusBar style="auto" />
@@ -186,6 +185,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#1E1E1E",
     alignItems: "center",
     justifyContent: "center",
+  },
+  buttonText: {
+    textAlign: "center",
+    fontFamily: "sans-serif",
+    fontSize: "100%",
+    fontWeight: "bold",
+    color: "white",
   },
   button_blue: {
     textAlign: "center",
