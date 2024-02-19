@@ -28,6 +28,7 @@ import Settings from "./Settings";
 import ViewAll from "./ViewAll";
 import EditUserBusiness from "./EditUserBusiness";
 import { TouchableOpacity } from "react-native";
+import styles from "./styles";
 
 // Separate SignInScreen Component
 const SignInScreen = ({ navigation }) => {
@@ -57,7 +58,7 @@ const SignInScreen = ({ navigation }) => {
           accessibilityLabel="Enter Outpour app"
           onPress={() => navigation.navigate("Home")}
         >
-         <Text style={styles.buttonText}>Sign In</Text>
+          <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>
         <TouchableOpacity //Sign Up
           style={styles.button_blue}
@@ -71,7 +72,8 @@ const SignInScreen = ({ navigation }) => {
           style={styles.button_red}
           accessibilityLabel="Forgot Password"
           onPress={() => navigation.navigate("Forgot")}
-        ><Text style={styles.buttonText}>Forgot Password</Text>
+        >
+          <Text style={styles.buttonText}>Forgot Password</Text>
         </TouchableOpacity>
       </View>
       <StatusBar style="auto" />
@@ -178,98 +180,16 @@ function App() {
   );
 }
 
-// Styles
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#1E1E1E",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonText: {
-    textAlign: "center",
-    fontFamily: "sans-serif",
-    fontSize: "100%",
-    fontWeight: "bold",
-    color: "white",
-  },
-  button_blue: {
-    textAlign: "center",
-    fontFamily: "sans-serif",
-    fontSize: "200%",
-    fontWeight: "bold",
-    color: "white",
-    borderWidth: 3,
-    borderRadius: 10,
-    borderColor: "#AAC6FD",
-    backgroundColor: "black",
-    padding: 10,
-    marginBottom: 15,
-  },
-  button_red: {
-    textAlign: "center",
-    fontFamily: "sans-serif",
-    fontSize: "200%",
-    fontWeight: "bold",
-    color: "white",
-    borderWidth: 3,
-    borderRadius: 10,
-    borderColor: "#FF8A8A",
-    backgroundColor: "black",
-    padding: 10,
-    marginBottom: 15,
-  },
-  button_field: {
-    marginTop: "30%",
-    alignContent: "center",
-  },
-  title_red: {
-    fontWeight: "bold",
-    fontSize: 30,
-    color: "#FF8A8A",
-  },
-  title_blue: {
-    fontWeight: "bold",
-    fontSize: 50,
-    color: "#AAC6FD",
-  },
-  logo: {
-    width: 300,
-    height: 110,
-    marginBottom: "20%",
-  },
-  inputView: {
-    width: "80%",
-    borderRadius: 25,
-    height: 50,
-  },
-  input_red: {
-    backgroundColor: "#fcfdff",
-    borderWidth: 3,
-    borderColor: "#FF8A8A",
-    borderRadius: 5,
-    padding: 5,
-  },
-  input_blue: {
-    backgroundColor: "#fcfdff",
-    borderWidth: 3,
-    borderColor: "#75A1F5",
-    borderRadius: 5,
-    padding: 5,
-  },
-  inputLabelLoggedOut: {
-    color: "#FFF",
-    fontSize: 20, // Changed from "12px" to 12
-    marginTop: 10, // Changed from "10px" to 10
-  },
-});
-
 export default App;
 
-/*Julian's Notes
--FIXED bottom edge of logo clipping
--REMOVED "Sign-In" title from landing screen
--REPLACED landing page <Button>s with <TouchableOpacity>
--ADDED "input_red" & "input_blue" style calls
--ADDED "button_red","button_blue", and "button_field" style calls
+/*Julian's Notes 2: iOS Boogaloo
+-UPDATED the following packages
+  react-native 0.73.2 -> 0.73.4
+  expo@50.0.2 -> 50.0.6
+  @expo/metro-runtime@3.1.2 -> 3.1.3
+
+-FIXED ballooned fonts due to fontSize calls (all pages)
+
+-MOVED all page component styles to styles.js 
+!NOTE BottomNavBar & PageTitle kept their local style calls
 */

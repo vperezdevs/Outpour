@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Switch, Image, StyleSheet } from 'react-native';
-import PageTitle from './PageTitle';
-import { CommonActions } from '@react-navigation/native'; // Import CommonActions
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Switch,
+  Image,
+  SafeAreaView,
+} from "react-native";
+import PageTitle from "./PageTitle";
+import { CommonActions } from "@react-navigation/native";
+import styles from "./styles";
+// Import CommonActions
 
-const Settings = ({navigation}) => {
+const Settings = ({ navigation }) => {
   const [notifications, setNotifications] = useState(false);
-//placeholders for darkmode and notifications
+  //placeholders for darkmode and notifications
 
   const toggleNotifications = () => {
     setNotifications(!notifications);
@@ -16,102 +25,70 @@ const Settings = ({navigation}) => {
     navigation.dispatch(
       CommonActions.reset({
         index: 0,
-        routes: [{ name: 'SignInScreen' }],
+        routes: [{ name: "SignInScreen" }],
       })
     );
   };
 
-
   const renderInput = (label, value, onToggle) => {
-    if (label === 'Notifications') {
+    if (label === "Notifications") {
       return (
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>{label}</Text>
+        <View style={styles.inputBoxSet}>
+          <Text style={styles.inputLabelSet}>{label}</Text>
           <Switch
             value={value}
             onValueChange={onToggle}
-            trackColor={{ false: '#767577', true: '#81b0ff' }}
-            thumbColor={value ? '#f5dd4b' : '#f4f3f4'}
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            thumbColor={value ? "#f5dd4b" : "#f4f3f4"}
           />
         </View>
       );
-    } else if (label === 'Log Out') {
+    } else if (label === "Log Out") {
       return (
-        <TouchableOpacity style={styles.inputBox} onPress={handleLogout}>
-          <Text style={styles.inputLabel}>{label}</Text>
-          <Image source={require('./assets/logout.png')} style={styles.logoutIcon} />
+        <TouchableOpacity style={styles.inputBoxSet} onPress={handleLogout}>
+          <Text style={styles.inputLabelSet}>{label}</Text>
+          <Image
+            source={require("./assets/logout.png")}
+            style={styles.logoutIconSet}
+          />
         </TouchableOpacity>
       );
     } else {
       return (
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>{label}</Text>
+        <View style={styles.inputBoxSet}>
+          <Text style={styles.inputLabelSet}>{label}</Text>
         </View>
       );
     }
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container2}>
       {/* Header with Heading */}
       <View>
-        <PageTitle title="Settings" showBackButton={true} backgroundColor="#BE4621" navigation={navigation} />
+        <PageTitle
+          title="Settings"
+          showBackButton={true}
+          backgroundColor="#BE4621"
+          navigation={navigation}
+        />
       </View>
 
       {/* Stacked Input Boxes */}
-      <View style={styles.inputContainer}>
-        {renderInput('Location', false, () => {})} {/* Placeholder for Location */}
-        {renderInput('Notifications', notifications, toggleNotifications)}
-        {renderInput('Language', false, () => {})} {/* Placeholder for Language */}
-        {renderInput('Log Out', false, () => {})} {/* Placeholder for Log Out */}
+      <View style={styles.inputContainerEB}>
+        {renderInput("Location", false, () => {})}
+        {renderInput("Notifications", notifications, toggleNotifications)}
+        {renderInput("Language", false, () => {})}
+        {renderInput("Log Out", false, () => {})}
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#1E1E1E',
-  },
-  backButton: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  inputContainer: {
-    margin: 20,
-  },
-  inputBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 15,
-    borderBottomWidth: 1,
-    borderColor: 'gray',
-    paddingBottom: 10,
-  },
-  inputLabel: {
-    fontSize: 16,
-    color: 'white',
-  },
-  logoutIcon: {
-    width: 20,
-    height: 20,
-    resizeMode: 'contain',
-  },
-  updateButton: {
-    backgroundColor: 'black',
-    padding: 15,
-    alignItems: 'center',
-    borderRadius: 5,
-  },
-  updateButtonText: {
-    color: 'black',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
-
 export default Settings;
+
+/*
+Julian's Notes 2: iOS Boogaloo
+
+- REMOVED placeholder comments, caused text render error
+*/

@@ -37,7 +37,7 @@ const BottomNavBar = ({ activeLink, navigation }) => {
       <TouchableOpacity
         style={[
           styles.navItem,
-          activeLink === "Profile" && styles.activeNavItem,
+          activeLink === "Profile" && styles.activeNavItemText,
         ]}
         onPress={() => navigation.navigate("Profile")} // Navigate to Profile screen
       >
@@ -67,8 +67,9 @@ const styles = StyleSheet.create({
     right: 0,
     borderWidth: 3,
     borderColor: "#75A1F5",
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    borderBottomWidth: 0,
   },
   navItem: {
     flex: 1,
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
   },
   navItemText: {
     color: "#ffffff",
-    fontSize: "150%",
+    fontSize: "30%",
   },
   activeNavItemText: {
     color: "#FF8A8A", // Set the text color for the active link

@@ -1,53 +1,79 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import BottomNavBar from './BottomNavBar';
-import PageTitle from './PageTitle';
+import React from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  ScrollView,
+  SafeAreaView,
+} from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
+import BottomNavBar from "./BottomNavBar";
+import PageTitle from "./PageTitle";
+import styles from "./styles";
 
 const Favorites = ({ navigation }) => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container2}>
       {/* Header with Page name */}
-      <PageTitle title="Favorites" showBackButton={true} backgroundColor="#BE4621" navigation={navigation} />
+      <PageTitle
+        title="Favorites"
+        showBackButton={true}
+        backgroundColor="#BE4621"
+        navigation={navigation}
+      />
 
       {/* ScrollView for the content */}
-      <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
-        <View style={styles.cardContainer}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={styles.cardContainerFav}>
           {/* Card 1 */}
-          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("BusinessPage")}>
+          <TouchableOpacity
+            style={styles.cardFav}
+            onPress={() => navigation.navigate("BusinessPage")}
+          >
             <Image
-              source={require('./assets/Cover_Wallys.jpg')}
-              style={styles.cardImage}
+              source={require("./assets/Cover_Wallys.jpg")}
+              style={styles.cardImageFav}
               resizeMode="cover"
             />
-            <Text style={styles.cardText}>Wallys</Text>
-            <TouchableOpacity style={styles.heartIcon}>
+            <Text style={styles.cardTextFav}>Wallys</Text>
+            <TouchableOpacity style={styles.heartIconFav}>
               <Icon name="heart" size={20} color="white" />
             </TouchableOpacity>
           </TouchableOpacity>
 
           {/* Card 2 */}
-          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("BusinessPage")}>
+          <TouchableOpacity
+            style={styles.cardFav}
+            onPress={() => navigation.navigate("BusinessPage")}
+          >
             <Image
-              source={require('./assets/Cover_Wallys.jpg')}
-              style={styles.cardImage}
+              source={require("./assets/Cover_Wallys.jpg")}
+              style={styles.cardImageFav}
               resizeMode="cover"
             />
-            <Text style={styles.cardText}>Wallys</Text>
-            <TouchableOpacity style={styles.heartIcon}>
+            <Text style={styles.cardTextFav}>Wallys</Text>
+            <TouchableOpacity style={styles.heartIconFav}>
               <Icon name="heart" size={20} color="white" />
             </TouchableOpacity>
           </TouchableOpacity>
 
           {/* Card 3 to demonstrate scroll */}
-          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("BusinessPage")}>
+          <TouchableOpacity
+            style={styles.cardFav}
+            onPress={() => navigation.navigate("BusinessPage")}
+          >
             <Image
-              source={require('./assets/Cover_Wallys.jpg')}
-              style={styles.cardImage}
+              source={require("./assets/Cover_Wallys.jpg")}
+              style={styles.cardImageFav}
               resizeMode="cover"
             />
-            <Text style={styles.cardText}>Wallys</Text>
-            <TouchableOpacity style={styles.heartIcon}>
+            <Text style={styles.cardTextFav}>Wallys</Text>
+            <TouchableOpacity style={styles.heartIconFav}>
               <Icon name="heart" size={20} color="white" />
             </TouchableOpacity>
           </TouchableOpacity>
@@ -56,46 +82,44 @@ const Favorites = ({ navigation }) => {
 
       {/* BottomNavBar at the bottom */}
       <BottomNavBar activeLink="Profile" navigation={navigation} />
-    </View>
+    </SafeAreaView>
   );
 };
-
+/*
 const styles = StyleSheet.create({
-  container: {
+  container2: {
     flex: 1,
-    backgroundColor: '#1E1E1E',
+    backgroundColor: "#1E1E1E",
   },
   scrollContainer: {
     flexGrow: 1,
   },
-  cardContainer: {
+  cardContainerFav: {
     marginBottom: 50,
   },
-  card: {
+  cardFav: {
     margin: 30,
     borderRadius: 2,
-    overflow: 'hidden',
-    borderColor: '#ffffff',
-    boxShadow: 'rgb(121, 149, 255) 0px 0px 16px 4px',
-    position: 'relative',
+    overflow: "hidden",
+    borderColor: "#ffffff",
+    boxShadow: "rgb(121, 149, 255) 0px 0px 16px 4px",
+    position: "relative",
   },
-  cardImage: {
-    width: '100%',
+  cardImageFav: {
+    width: "100%",
     height: 200,
   },
-  cardText: {
+  cardTextFav: {
     padding: 10,
-    textAlign: 'center',
-    color: 'white',
-    fontWeight: 'bold',
+    textAlign: "center",
+    color: "white",
+    fontWeight: "bold",
   },
-  heartIcon: {
-    position: 'absolute',
+  heartIconFav: {
+    position: "absolute",
     top: 10,
     right: 10,
   },
-  bottomNavBar: {
-  },
 });
-
+*/
 export default Favorites;

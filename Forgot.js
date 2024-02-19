@@ -1,28 +1,47 @@
-import React from 'react';
-import { StyleSheet, View, Button, Image, TextInput, Text, StatusBar } from 'react-native';
+import React from "react";
+import {
+  StyleSheet,
+  View,
+  Button,
+  Image,
+  TextInput,
+  Text,
+  StatusBar,
+  TouchableOpacity,
+} from "react-native";
+import styles from "./styles";
 
 const Forgot = ({ navigation }) => {
-    return (
-      <View style={styles.container}>
-        <Image style={styles.logo} source={require('./assets/Logo_Outpour_Long.png')} />
-        <Text style={styles.title}>Recover Password</Text>
+  return (
+    <View style={styles.container}>
+      <Image
+        style={styles.logo}
+        source={require("./assets/Logo_Outpour_Long.png")}
+      />
+      <Text style={styles.title}>Recover Password</Text>
+      <View style={styles.inputView}>
         <Text style={styles.inputLabelLoggedOut}>Recovery Email</Text>
-        <TextInput label="Email" style={styles.input} placeholder="email" />
+        <TextInput label="Email" style={styles.input_red} placeholder="email" />
         <Text style={styles.inputLabelLoggedOut}>Confirm Recovery Email</Text>
-        <TextInput label="Confirm" style={styles.input} placeholder="Confirm" />
+        <TextInput
+          label="Confirm"
+          style={styles.input_blue}
+          placeholder="Confirm"
+        />
         <View style={{ marginTop: 20 }}>
-          <Button //Signin
-            color="#CADBFC"
-            title="Send Link"
-            accessibilityLabel="Send Link"
-            onPress={() => navigation.navigate('Signin')}
-          />
+          <TouchableOpacity //Signin
+            style={styles.submitButtonSU}
+            onPress={() => navigation.navigate("Home")}
+          >
+            <Text styles={styles.submitButtonTextSU}>Send Link</Text>
+          </TouchableOpacity>
         </View>
-        <StatusBar style="auto" />
       </View>
-    );
-  };
-
+      <StatusBar style="auto" />
+    </View>
+  );
+};
+/*
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -55,6 +74,6 @@ const Forgot = ({ navigation }) => {
       marginTop: 10,
     },
   });
-
+*/
 
 export default Forgot;

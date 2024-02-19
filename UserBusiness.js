@@ -7,10 +7,11 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
-  Button,
+  SafeAreaView,
 } from "react-native";
 import Slider from "@react-native-community/slider";
 import PageTitle from "./PageTitle";
+import styles from "./styles";
 
 const BusinessPage = ({ navigation }) => {
   //Placeholder data
@@ -57,64 +58,69 @@ const BusinessPage = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.containerBis}>
       {/* Back link */}
       <View style={styles.pageTitleContainer}>
-            <PageTitle title="My Business" showBackButton={true} backgroundColor="#EB9F05" navigation={navigation} />
-        </View>
+        <PageTitle
+          title="My Business"
+          showBackButton={true}
+          backgroundColor="#EB9F05"
+          navigation={navigation}
+        />
+      </View>
 
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.containerBis}>
         {/* Banner Image */}
         <Image
           source={{ uri: businessDetails.bannerImage }}
-          style={styles.bannerImage}
+          style={styles.bannerImageBis}
         />
 
         {/* Business Details */}
-        <View style={styles.businessDetailsContainer}>
-          <View style={styles.businessInfo}>
-            <Text style={styles.businessName}>{businessDetails.name}</Text>
-            <Text style={styles.businessAddress}>
+        <View style={styles.businessDetailsContainerBis}>
+          <View style={styles.businessInfoBis}>
+            <Text style={styles.businessNameBis}>{businessDetails.name}</Text>
+            <Text style={styles.businessAddressBis}>
               {businessDetails.address}
             </Text>
           </View>
           <TouchableOpacity
-                    style={styles.editBusinessButton}
-                    onPress={() => navigation.navigate('EditUserBusiness')}
-                    >
-                    <Text style={styles.editBusinessButtonText}>Edit</Text>
-                </TouchableOpacity>
+            style={styles.editBusinessButton}
+            onPress={() => navigation.navigate("EditUserBusiness")}
+          >
+            <Text style={styles.editBusinessButtonText}>Edit</Text>
+          </TouchableOpacity>
         </View>
 
         {/* Map Placeholder */}
-        <TouchableOpacity style={styles.mapPlaceholder}>
+        <TouchableOpacity style={styles.mapPlaceholderBis}>
           <Image
             source={{ uri: businessDetails.mapImage }}
-            style={styles.mapImage}
+            style={styles.mapImageBis}
           />
-          <View style={styles.overlay} />
-          <Text style={styles.mapText}>Map</Text>
+          <View style={styles.overlayBis} />
+          <Text style={styles.mapTextBis}>Map</Text>
         </TouchableOpacity>
 
         {/* Navigation Bar */}
-        <View style={styles.navBar}>
+        <View style={styles.navBarBis}>
           <TouchableOpacity onPress={() => handleNavClick("rating")}>
-            <Text style={styles.navBarItem}>Rating</Text>
+            <Text style={styles.navBarItemBis}>Rating</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handleNavClick("reviews")}>
-            <Text style={styles.navBarItem}>Reviews</Text>
+            <Text style={styles.navBarItemBis}>Reviews</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handleNavClick("rate")}>
-            <Text style={styles.navBarItem}>Rate</Text>
+            <Text style={styles.navBarItemBis}>Rate</Text>
           </TouchableOpacity>
         </View>
 
         {activeSection === "rating" && (
-          <View style={styles.sliderContainer}>
-            <View style={styles.iconSliderContainer}>
-              <View style={styles.iconPlaceholder} />
+          <View style={styles.sliderContainerBis}>
+            <View style={styles.iconSliderContainerBis}>
+              <View style={styles.iconPlaceholderBis} />
               <Slider
-                style={styles.slider}
+                style={styles.sliderBis}
                 minimumValue={1}
                 maximumValue={5}
                 minimumTrackTintColor="#0057FF"
@@ -124,10 +130,10 @@ const BusinessPage = ({ navigation }) => {
                 value={5}
               />
             </View>
-            <View style={styles.iconSliderContainer}>
-              <View style={styles.iconPlaceholder} />
+            <View style={styles.iconSliderContainerBis}>
+              <View style={styles.iconPlaceholderBis} />
               <Slider
-                style={styles.slider}
+                style={styles.sliderBis}
                 minimumValue={1}
                 maximumValue={5}
                 minimumTrackTintColor="#0057FF"
@@ -137,10 +143,10 @@ const BusinessPage = ({ navigation }) => {
                 value={3}
               />
             </View>
-            <View style={styles.iconSliderContainer}>
-              <View style={styles.iconPlaceholder} />
+            <View style={styles.iconSliderContainerBis}>
+              <View style={styles.iconPlaceholderBis} />
               <Slider
-                style={styles.slider}
+                style={styles.sliderBis}
                 minimumValue={1}
                 maximumValue={5}
                 minimumTrackTintColor="#0057FF"
@@ -150,10 +156,10 @@ const BusinessPage = ({ navigation }) => {
                 value={4}
               />
             </View>
-            <View style={styles.iconSliderContainer}>
-              <View style={styles.iconPlaceholder} />
+            <View style={styles.iconSliderContainerBis}>
+              <View style={styles.iconPlaceholderBis} />
               <Slider
-                style={styles.slider}
+                style={styles.sliderBis}
                 minimumValue={1}
                 maximumValue={5}
                 minimumTrackTintColor="#0057FF"
@@ -163,8 +169,8 @@ const BusinessPage = ({ navigation }) => {
                 value={2}
               />
             </View>
-            <View style={styles.ratingTextBox}>
-              <Text style={styles.ratingText}>
+            <View style={styles.ratingTextBoxBis}>
+              <Text style={styles.ratingTextBis}>
                 Users rate this bar highly for its drinks and customer service.
               </Text>
             </View>
@@ -174,22 +180,26 @@ const BusinessPage = ({ navigation }) => {
         {activeSection === "reviews" && (
           <View>
             {reviews.map((review) => (
-              <View key={review.id} style={styles.reviewBox}>
-                <View style={styles.reviewHeader}>
+              <View key={review.id} style={styles.reviewBoxBis}>
+                <View style={styles.reviewHeaderBis}>
                   <Image
                     source={{ uri: review.userProfilePic }}
-                    style={styles.userProfilePic}
+                    style={styles.userProfilePicBis}
                   />
                   <View>
-                    <Text style={styles.userName}>{review.userName}</Text>
-                    <Text style={styles.reviewDate}>{review.reviewDate}</Text>
+                    <Text style={styles.userNameBis}>{review.userName}</Text>
+                    <Text style={styles.reviewDateBis}>
+                      {review.reviewDate}
+                    </Text>
                   </View>
                 </View>
-                <Text style={styles.reviewContent}>{review.reviewContent}</Text>
-                <View style={styles.iconSliderContainer}>
-                  <View style={styles.iconPlaceholder} />
+                <Text style={styles.reviewContentBis}>
+                  {review.reviewContent}
+                </Text>
+                <View style={styles.iconSliderContainerBis}>
+                  <View style={styles.iconPlaceholderBis} />
                   <Slider
-                    style={styles.slider}
+                    style={styles.sliderBis}
                     minimumValue={1}
                     maximumValue={5}
                     minimumTrackTintColor="#0057FF"
@@ -199,10 +209,10 @@ const BusinessPage = ({ navigation }) => {
                     value={5}
                   />
                 </View>
-                <View style={styles.iconSliderContainer}>
-                  <View style={styles.iconPlaceholder} />
+                <View style={styles.iconSliderContainerBis}>
+                  <View style={styles.iconPlaceholderBis} />
                   <Slider
-                    style={styles.slider}
+                    style={styles.sliderBis}
                     minimumValue={1}
                     maximumValue={5}
                     minimumTrackTintColor="#0057FF"
@@ -212,10 +222,10 @@ const BusinessPage = ({ navigation }) => {
                     value={3}
                   />
                 </View>
-                <View style={styles.iconSliderContainer}>
-                  <View style={styles.iconPlaceholder} />
+                <View style={styles.iconSliderContainerBis}>
+                  <View style={styles.iconPlaceholderBis} />
                   <Slider
-                    style={styles.slider}
+                    style={styles.sliderBis}
                     minimumValue={1}
                     maximumValue={5}
                     minimumTrackTintColor="#0057FF"
@@ -225,10 +235,10 @@ const BusinessPage = ({ navigation }) => {
                     value={4}
                   />
                 </View>
-                <View style={styles.iconSliderContainer}>
-                  <View style={styles.iconPlaceholder} />
+                <View style={styles.iconSliderContainerBis}>
+                  <View style={styles.iconPlaceholderBis} />
                   <Slider
-                    style={styles.slider}
+                    style={styles.sliderBis}
                     thumbTintColor="white"
                     minimumValue={1}
                     maximumValue={5}
@@ -245,15 +255,15 @@ const BusinessPage = ({ navigation }) => {
         {activeSection === "rate" && (
           <View>
             <TextInput
-              style={styles.rateInput}
+              style={styles.rateInputBis}
               placeholder="Write your review..."
             />
 
-            <View style={styles.iconSliderContainer}>
-              <View style={styles.iconPlaceholder} />
-              <View stle={styles.sliderContainer}>
+            <View style={styles.iconSliderContainerBis}>
+              <View style={styles.iconPlaceholderBis} />
+              <View stle={styles.sliderContainerBis}>
                 <Slider
-                  style={styles.slider}
+                  style={styles.sliderBis}
                   minimumValue={1}
                   maximumValue={5}
                   minimumTrackTintColor="#0057FF"
@@ -264,11 +274,11 @@ const BusinessPage = ({ navigation }) => {
                 />
               </View>
             </View>
-            <View style={styles.iconSliderContainer}>
-              <View style={styles.iconPlaceholder} />
-              <View stle={styles.sliderContainer}>
+            <View style={styles.iconSliderContainerBis}>
+              <View style={styles.iconPlaceholderBis} />
+              <View stle={styles.sliderContainerBis}>
                 <Slider
-                  style={styles.slider}
+                  style={styles.sliderBis}
                   minimumValue={1}
                   maximumValue={5}
                   minimumTrackTintColor="#0057FF"
@@ -279,11 +289,11 @@ const BusinessPage = ({ navigation }) => {
                 />
               </View>
             </View>
-            <View style={styles.iconSliderContainer}>
-              <View style={styles.iconPlaceholder} />
-              <View stle={styles.sliderContainer}>
+            <View style={styles.iconSliderContainerBis}>
+              <View style={styles.iconPlaceholderBis} />
+              <View stle={styles.sliderContainerBis}>
                 <Slider
-                  style={styles.slider}
+                  style={styles.sliderBis}
                   minimumValue={1}
                   maximumValue={5}
                   minimumTrackTintColor="#0057FF"
@@ -294,11 +304,11 @@ const BusinessPage = ({ navigation }) => {
                 />
               </View>
             </View>
-            <View style={styles.iconSliderContainer}>
-              <View style={styles.iconPlaceholder} />
-              <View stle={styles.sliderContainer}>
+            <View style={styles.iconSliderContainerBis}>
+              <View style={styles.iconPlaceholderBis} />
+              <View stle={styles.sliderContainerBis}>
                 <Slider
-                  style={styles.slider}
+                  style={styles.sliderBis}
                   minimumValue={1}
                   maximumValue={5}
                   minimumTrackTintColor="#0057FF"
@@ -310,20 +320,20 @@ const BusinessPage = ({ navigation }) => {
               </View>
             </View>
             <TouchableOpacity
-              style={styles.submitButton}
+              style={styles.submitButtonBis}
               onPress={() => {
                 /* Submit action here */
               }}
             >
-              Submit
+              <Text>Submit</Text>
             </TouchableOpacity>
           </View>
         )}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
-
+/*
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -336,9 +346,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   bannerImage: {
-    width: '100%',
+    width: "100%",
     height: 200, // for 30% of the viewport height, adjust the multiplier as needed
-    alignSelf: 'center', // Center the image
+    alignSelf: "center", // Center the image
     // ... other styles ...
   },
   businessDetailsContainer: {
@@ -350,7 +360,7 @@ const styles = StyleSheet.create({
   ratingText: {
     justifyContent: "center",
     color: "#ffffff",
-    fontSize: "150%",
+    fontSize: "30%",
   },
   ratingTextBox: {
     borderWidth: 3,
@@ -387,16 +397,18 @@ const styles = StyleSheet.create({
   },
   editBusinessButton: {
     marginLeft: 10,
-    backgroundColor: '#0057FF',
+    backgroundColor: "#f1f1f1",
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
-    marginBottom: 20
-},
-editBusinessButtonText: {
-    color: '#FFFFFF',
+    borderWidth: 3,
+    borderColor: "#AAC6FD",
+    marginBottom: 20,
+  },
+  editBusinessButtonText: {
+    color: "black",
     fontSize: 16,
-},
+  },
   mapPlaceholder: {
     borderRadius: 10,
     overflow: "hidden",
@@ -435,7 +447,7 @@ editBusinessButtonText: {
   },
   navBarItem: {
     padding: 10,
-    fontSize: "135%",
+    fontSize: "30%",
     // Add more styles as needed
   },
   reviewBox: {
@@ -460,16 +472,16 @@ editBusinessButtonText: {
   userName: {
     fontWeight: "bold",
     color: "#ffffff",
-    fontSize: "140%",
+    fontSize: "30%",
   },
   reviewDate: {
     color: "#ffffff",
-    fontSize: "110%",
+    fontSize: "15%",
   },
   reviewContent: {
     color: "#ffffff",
     paddingBottom: "5%",
-    fontSize: "130%",
+    fontSize: "25%",
   },
   reviewRating: {
     color: "#ffffff",
@@ -517,7 +529,11 @@ editBusinessButtonText: {
     justifyContent: "center",
     marginRight: 10,
   },
+  pageTitleContainer: {
+    paddingTop: "5%",
+  },
 });
+*/
 
 export default BusinessPage;
 
@@ -530,4 +546,8 @@ export default BusinessPage;
 -UPDATED small nav bar styling
 -UPDATED "Ratings" tab styling
 -CHANGED "reviewText" to "ratingText" (it appears on the "Rating" page)
+*/
+
+/*Julian's Notes 2: iOS Boogaloo
+-
 */

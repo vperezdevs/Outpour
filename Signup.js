@@ -1,61 +1,48 @@
-import React from 'react';
-import { StyleSheet, View, Button, Image, TextInput, Text, StatusBar } from 'react-native';
+import React from "react";
+import {
+  StyleSheet,
+  View,
+  Button,
+  Image,
+  TextInput,
+  Text,
+  StatusBar,
+} from "react-native";
+import { TouchableOpacity } from "react-native";
+import styles from "./styles";
+
 const Signup = ({ navigation }) => {
-    return (
-      <View style={styles.container}>
-        <Image style={styles.logo} source={require('./assets/Logo_Outpour_Long.png')} />
-        <Text style={styles.title}>Sign Up</Text>
+  return (
+    <View style={styles.container}>
+      <Image
+        style={styles.logo}
+        source={require("./assets/Logo_Outpour_Long.png")}
+      />
+      <Text style={styles.titleSU}>Sign Up</Text>
+      <View style={styles.inputView}>
         <Text style={styles.inputLabelLoggedOut}>Email</Text>
-        <TextInput label="Email" style={styles.input} placeholder="email" />
+        <TextInput label="Email" style={styles.input_red} placeholder="Email" />
         <Text style={styles.inputLabelLoggedOut}>Password</Text>
-        <TextInput label="password" style={styles.input} placeholder="password" />
+        <TextInput
+          label="password"
+          style={styles.input_blue}
+          placeholder="Password"
+        />
         <Text style={styles.inputLabelLoggedOut}>Confirm Password</Text>
-        <TextInput label="Confirm Password" style={styles.input} placeholder="Confirm Password" />
-        <View style={{ marginTop: 20 }}>
-          <Button //Signin
-            color="#CADBFC"
-            title="Sign Up"
-            accessibilityLabel="Sign Up"
-            onPress={() => navigation.navigate('Home')}
-          />
-        </View>
-        <StatusBar style="auto" />
+        <TextInput
+          label="Confirm Password"
+          style={styles.input_red}
+          placeholder="Confirm Password"
+        />
+        <TouchableOpacity //Signin
+          style={styles.submitButtonSU}
+          onPress={() => navigation.navigate("Home")}
+        >
+          <Text styles={styles.submitButtonTextSU}>Sign Up</Text>
+        </TouchableOpacity>
       </View>
-    );
-  };
+    </View>
+  );
+};
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#1E1E1E',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    title: {
-      fontWeight: "bold",
-      fontSize: 50,
-      color: "#fcfdff",
-      marginBottom: 40,
-    },
-    inputView: {
-      width: "80%",
-      backgroundColor: "#fcfdff",
-      borderRadius: 25,
-      height: 50,
-    },
-    logo: {
-      width: 300,
-      height: 110
-    },
-    input: {
-      backgroundColor: "#fcfdff",
-    },
-    inputLabelLoggedOut: {
-      color: "#FFF",
-      fontSize: 12,
-      marginTop: 10,
-    },
-  });
-
-  
-  export default Signup;
+export default Signup;
