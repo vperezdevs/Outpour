@@ -29,9 +29,27 @@ import ViewAll from "./ViewAll";
 import EditUserBusiness from "./EditUserBusiness";
 import { TouchableOpacity } from "react-native";
 import styles from "./styles";
+import { auth, signInWithEmailAndPassword } from './firebase'; // Adjust this import path as necessary
+import { useState } from "react";
+
 
 // Separate SignInScreen Component
 const SignInScreen = ({ navigation }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSignIn = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log(user);
+        navigation.navigate("Home");
+      })
+      .catch((error) => {
+        Alert.alert(error.message);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <Image
@@ -56,7 +74,7 @@ const SignInScreen = ({ navigation }) => {
         <TouchableOpacity //Signin
           style={styles.button_blue}
           accessibilityLabel="Enter Outpour app"
-          onPress={() => navigation.navigate("Home")}
+          onPress={handleSignIn}
         >
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>
