@@ -9,6 +9,7 @@ import {
   StatusBar,
   Pressable,
   Touchable,
+  Alert
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -62,13 +63,18 @@ const SignInScreen = ({ navigation }) => {
           label="Email"
           style={styles.input_blue}
           placeholder="email"
-        />
+          onChangeText={text => setEmail(text)}
+          value={email} // Ensure the input reflects the current state
+          />
         <Text style={styles.inputLabelLoggedOut}>Password</Text>
         <TextInput
           label="password"
           style={styles.input_red}
           placeholder="password"
-        />
+          onChangeText={text => setPassword(text)}
+          value={password} // Ensure the input reflects the current state
+          secureTextEntry // This prop hides the password input
+          />
       </View>
       <View style={styles.button_field}>
         <TouchableOpacity //Signin
