@@ -427,6 +427,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     backgroundColor: "black",
+    color: '#FFFFFF',
   },
   updateButton: {
     padding: 15,

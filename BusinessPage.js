@@ -1,65 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   Image,
   TouchableOpacity,
   ScrollView,
   TextInput,
+  Platform,
 } from "react-native";
 import Slider from "@react-native-community/slider";
-import Icon from "react-native-vector-icons/FontAwesome";
+import { db } from "./firebase";
+import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
+import MapView, { Marker } from "react-native-maps";
 import styles from "./styles";
 
-const BusinessPage = ({ navigation }) => {
-  //Placeholder data
-  const businessDetails = {
-    name: "Business Name",
-    address: "123 Business St, City",
-    bannerImage: "./assets/Business_Banner.png",
-    mapImage: "./assets/Map_Graphic.png",
-  };
-
-  const reviews = [
-    {
-      id: 1,
-      userName: "John Doe",
-      userProfilePic: "./assets/Profile Picture Persona.png",
-      reviewDate: "Jan 20, 2024",
-      reviewContent: "Great place, loved the ambiance!",
-      rating1: 4.5,
-      rating2: 3,
-      rating3: 2,
-      rating4: 5,
-    },
-    {
-      id: 2,
-      userName: "Jane Smith",
-      userProfilePic: "./assets/Profile Picture Persona.png",
-      reviewDate: "Feb 1, 2024",
-      reviewContent:
-        "Their 2-for-1 nights are the best deal in town. What a steal!",
-      rating1: 4,
-      rating2: 5,
-      rating3: 4,
-      rating4: 2,
-    },
-    {
-      id: 3,
-      userName: "Hugh Man",
-      userProfilePic: "./assets/Profile Picture Persona.png",
-      reviewDate: "Dec 28, 2023",
-      reviewContent: "If I get hammered, you get a 5.",
-      rating1: 5,
-      rating2: 5,
-      rating3: 2,
-      rating4: 4,
-    },
-    //more reviews
-  ];
-
+const BusinessPage = ({ route, navigation }) => {
+  const { businessId } = route.params;
+  const [businessDetails, setBusinessDetails] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const [activeSection, setActiveSection] = useState("reviews");
+
+  useEffect(() => {
+    const fetchBusinessDataAndReviews = async () => {
+      if (businessId) {
+        const docRef = doc(db, "businesses", businessId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          const lat = parseFloat(data.lat);
+          const lng = parseFloat(data.lng);
+          setBusinessDetails({ id: docSnap.id, ...data, coordinates: { lat, lng } });
+
+          // Ensure you've imported and correctly used the query, where, and getDocs functions
+          const reviewsRef = collection(db, "reviews");
+          const q = query(reviewsRef, where("businessId", "==", businessId)); // Make sure 'businessId' matches the field name in your Firestore
+          const querySnapshot = await getDocs(q);
+
+          const fetchedReviews = querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+
+          setReviews(fetchedReviews);
+        } else {
+          console.log("No such business!");
+        }
+      }
+    };
+  
+    fetchBusinessDataAndReviews();
+  }, [businessId]);
 
   const handleNavClick = (section) => {
     setActiveSection(section);
@@ -76,41 +67,41 @@ const BusinessPage = ({ navigation }) => {
       </TouchableOpacity>
 
       <ScrollView style={styles.containerBis}>
-        {/* Banner Image */}
-        <Image
-          source={{ uri: businessDetails.bannerImage }}
-          style={styles.bannerImageBis}
-        />
-
-        {/* Business Details */}
-        <View style={styles.businessDetailsContainerBis}>
-          <View style={styles.businessInfoBis}>
-            <View style={styles.businessNameContainerBis}>
+        {/* Dynamically display banner image and business details */}
+        {businessDetails && (
+          <>
+            <Image
+              source={{ uri: businessDetails.bannerImage }}
+              style={styles.bannerImageBis}
+            />
+            <View style={styles.businessDetailsContainerBis}>
               <Text style={styles.businessNameBis}>{businessDetails.name}</Text>
-              <TouchableOpacity
-                style={styles.heartIconBis}
-                onPress={() => {
-                  /* handle heart icon press here */
-                }}
-              >
-                <Icon name="heart" size={20} color="white" />
-              </TouchableOpacity>
+              <Text style={styles.businessAddressBis}>{businessDetails.address}</Text>
             </View>
-            <Text style={styles.businessAddressBis}>
-              {businessDetails.address}
-            </Text>
-          </View>
-        </View>
+          </>
+        )}
 
-        {/* Map Placeholder */}
-        <TouchableOpacity style={styles.mapPlaceholderBis}>
-          <Image
-            source={{ uri: businessDetails.mapImage }}
-            style={styles.mapImageBis}
-          />
-          <View style={styles.overlayBis} />
-          <Text style={styles.mapTextBis}>Map</Text>
-        </TouchableOpacity>
+        {/* Replacing Map Placeholder with Google Maps for web */}
+        {businessDetails?.coordinates && (
+          <MapView
+            style={{ height: 200, borderRadius: 20 }}
+            initialRegion={{
+              latitude: businessDetails.coordinates.lat,
+              longitude: businessDetails.coordinates.lng,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          >
+            <Marker
+              coordinate={{
+                latitude: businessDetails.coordinates.lat,
+                longitude: businessDetails.coordinates.lng,
+              }}
+              title={businessDetails.name}
+              description={businessDetails.address}
+            />
+          </MapView>
+        )}
 
         {/* Navigation Bar */}
         <View style={styles.navBarBis}>
@@ -187,83 +178,51 @@ const BusinessPage = ({ navigation }) => {
           </View>
         )}
 
-        {activeSection === "reviews" && (
-          <View>
-            {reviews.map((review) => (
-              <View key={review.id} style={styles.reviewBoxBis}>
-                <View style={styles.reviewHeaderBis}>
-                  <Image
-                    source={{ uri: review.userProfilePic }}
-                    style={styles.userProfilePicBis}
-                  />
-                  <View>
-                    <Text style={styles.userNameBis}>{review.userName}</Text>
-                    <Text style={styles.reviewDateBis}>
-                      {review.reviewDate}
-                    </Text>
-                  </View>
-                </View>
-                <Text style={styles.reviewContentBis}>
-                  {review.reviewContent}
-                </Text>
-                <View style={styles.reviewSlidersBis}>
-                  <View style={styles.iconSliderContainerBis}>
-                    <View style={styles.iconPlaceholderBis} />
-                    <Slider
-                      style={styles.sliderBis}
-                      minimumValue={1}
-                      maximumValue={5}
-                      minimumTrackTintColor="#0057FF"
-                      maximumTrackTintColor="#FA2222"
-                      thumbTintColor="#FFFFFF"
-                      step={0.5}
-                      value={review.rating1}
-                    />
-                  </View>
-                  <View style={styles.iconSliderContainerBis}>
-                    <View style={styles.iconPlaceholderBis} />
-                    <Slider
-                      style={styles.sliderBis}
-                      minimumValue={1}
-                      maximumValue={5}
-                      minimumTrackTintColor="#0057FF"
-                      maximumTrackTintColor="#FA2222"
-                      thumbTintColor="#FFFFFF"
-                      step={0.5}
-                      value={review.rating2}
-                    />
-                  </View>
-                  <View style={styles.iconSliderContainerBis}>
-                    <View style={styles.iconPlaceholderBis} />
-                    <Slider
-                      style={styles.sliderBis}
-                      minimumValue={1}
-                      maximumValue={5}
-                      minimumTrackTintColor="#0057FF"
-                      maximumTrackTintColor="#FA2222"
-                      thumbTintColor="#FFFFFF"
-                      step={0.5}
-                      value={review.rating3}
-                    />
-                  </View>
-                  <View style={styles.iconSliderContainerBis}>
-                    <View style={styles.iconPlaceholderBis} />
-                    <Slider
-                      style={styles.sliderBis}
-                      thumbTintColor="white"
-                      minimumValue={1}
-                      maximumValue={5}
-                      minimumTrackTintColor="#0057FF"
-                      maximumTrackTintColor="#FA2222"
-                      step={0.5}
-                      value={review.rating4}
-                    />
-                  </View>
-                </View>
-              </View>
-            ))}
+{activeSection === "reviews" && (
+  <View>
+    {reviews.length > 0 ? (
+      reviews.map((review) => (
+        <View key={review.id} style={styles.reviewBoxBis}>
+          <View style={styles.reviewHeaderBis}>
+            <Image source={{ uri: review.userProfilePic }} style={styles.userProfilePicBis} />
+            <View>
+              <Text style={styles.userNameBis}>{review.userName}</Text>
+              <Text style={styles.reviewDateBis}>{review.reviewDate}</Text>
+            </View>
           </View>
-        )}
+          <Text style={styles.reviewContentBis}>{review.reviewContent}</Text>
+          <View style={styles.reviewSlidersBis}>
+            {/* Slider 1 */}
+            <Slider
+              style={styles.sliderBis}
+              minimumValue={1}
+              maximumValue={5}
+              minimumTrackTintColor="#0057FF"
+              maximumTrackTintColor="#FA2222"
+              thumbTintColor="#FFFFFF"
+              step={0.5}
+              value={review.rating1 || 0} // Use review.rating1 or default to 0 if undefined
+            />
+            {/* Slider 2 */}
+            <Slider
+              style={styles.sliderBis}
+              minimumValue={1}
+              maximumValue={5}
+              minimumTrackTintColor="#0057FF"
+              maximumTrackTintColor="#FA2222"
+              thumbTintColor="#FFFFFF"
+              step={0.5}
+              value={review.rating2 || 0} // Use review.rating2 or default to 0 if undefined
+            />
+            {/* Additional sliders as needed */}
+          </View>
+        </View>
+      ))
+    ) : (
+      <Text>No reviews available.</Text>
+    )}
+  </View>
+)}
         {activeSection === "rate" && (
           <View>
             <TextInput

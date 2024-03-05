@@ -1,5 +1,4 @@
-//basic expo/react native project setup
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -10,8 +9,12 @@ import {
   Image,
 } from "react-native";
 import BottomNavBar from "./BottomNavBar";
-import EditProfile from "./EditProfile";
-import styles from "./styles";
+import { db, auth } from "./firebase";
+import { doc, getDoc } from "firebase/firestore";
+import styles from "./styles"; // Ensure you have the correct path to your styles
+
+// Assuming you have a placeholder image in your assets folder
+const placeholderProfilePic = require("./assets/ProfilePicturePlaceholder.png");
 
 const menuItems = [
   { name: "My Business", image: require("./assets/MyBusiness.png") },
@@ -23,10 +26,29 @@ const menuItems = [
 ];
 
 const Profile = ({ navigation }) => {
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const userRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(userRef);
+        if (docSnap.exists()) {
+          setUserInfo(docSnap.data());
+        } else {
+          console.log("No user document found!");
+        }
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
+
   const handleLinkPress = (linkName) => {
-    console.log(`Link ${linkName} was pressed!`); // Replace with your actual navigation or other actions
+    // Logic to navigate to different screens based on the linkName
     if (linkName === "Reviews") {
-      navigation.navigate("UserReviews"); // Navigate to UserReviews when "Reviews" is clicked
+      navigation.navigate("UserReviews");
     } else if (linkName === "Alerts") {
       navigation.navigate("UserAlerts");
     } else if (linkName === "Favorites") {
@@ -44,19 +66,28 @@ const Profile = ({ navigation }) => {
     navigation.navigate("EditProfile");
   };
 
+  // Determine the source for the profile picture
+  const profilePictureSource = userInfo?.profilePictureUrl ? { uri: userInfo.profilePictureUrl } : placeholderProfilePic;
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView2}>
-        <Text style={styles.title}>John Doe</Text>
-        <Image
-          style={styles.profilePicture}
-          source={require("./assets/Profile Picture Persona.png")}
-        />
+        {userInfo ? (
+          <>
+            <Text style={styles.title}>{userInfo.userName}</Text>
+            <Text style={styles.title}>{userInfo.name}</Text>
+            <Text style={styles.title}>{userInfo.country}</Text>
+            <Image
+              style={styles.profilePicture}
+              source={profilePictureSource}
+            />
+          </>
+        ) : (
+          <Text>Loading...</Text>
+        )}
         <View style={styles.editProfileButton}>
           <TouchableOpacity
             style={styles.button_blue}
-            color="#CADBFC"
-            accessibilityLabel="Customize Profile"
             onPress={handleEditProfilePress}
           >
             <Text style={styles.editProfileButtonText}>Edit Profile</Text>
@@ -81,6 +112,7 @@ const Profile = ({ navigation }) => {
 };
 
 export default Profile;
+
 
 /*Julian's Notes
 
