@@ -1,125 +1,95 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   Image,
-  StyleSheet,
   ScrollView,
   SafeAreaView,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { db, auth } from "./firebase";
+import { doc, getDoc, updateDoc, arrayRemove, arrayUnion } from "firebase/firestore";
 import BottomNavBar from "./BottomNavBar";
 import PageTitle from "./PageTitle";
 import styles from "./styles";
 
 const Favorites = ({ navigation }) => {
+  const [favorites, setFavorites] = useState([]);
+
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const userRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(userRef);
+        if (docSnap.exists() && docSnap.data().favorites) {
+          const favoriteIds = docSnap.data().favorites; // Array of business IDs
+          // Fetch details for each favorite business
+          const favoritesData = await Promise.all(favoriteIds.map(async (id) => {
+            const businessRef = doc(db, "businesses", id);
+            const businessSnap = await getDoc(businessRef);
+            return businessSnap.exists() ? { id, ...businessSnap.data() } : null;
+          }));
+          setFavorites(favoritesData.filter(Boolean));
+        }
+      }
+    };
+
+    fetchFavorites();
+  }, []);
+
+  const toggleFavorite = async (businessId) => {
+    const user = auth.currentUser;
+    if (user) {
+      const userRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(userRef);
+      if (docSnap.exists()) {
+        const currentFavorites = docSnap.data().favorites || [];
+        const newFavorites = currentFavorites.includes(businessId) 
+          ? currentFavorites.filter(id => id !== businessId) 
+          : [...currentFavorites, businessId];
+
+        await updateDoc(userRef, { favorites: newFavorites });
+        fetchFavorites(); // Refresh favorites list
+      }
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container2}>
-      {/* Header with Page name */}
       <PageTitle
         title="Favorites"
         showBackButton={true}
         backgroundColor="#BE4621"
         navigation={navigation}
       />
-
-      {/* ScrollView for the content */}
-      <ScrollView
-        contentContainerStyle={styles.scrollContainer}
-        keyboardShouldPersistTaps="handled"
-      >
-        <View style={styles.cardContainerFav}>
-          {/* Card 1 */}
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {favorites.map((business) => (
           <TouchableOpacity
+            key={business.id}
             style={styles.cardFav}
-            onPress={() => navigation.navigate("BusinessPage")}
+            onPress={() => navigation.navigate("BusinessPage", { businessId: business.id })}
           >
             <Image
-              source={require("./assets/Cover_Wallys.jpg")}
+              source={{ uri: business.imageUrl }} // Use dynamic image URL from Firestore
               style={styles.cardImageFav}
               resizeMode="cover"
             />
-            <Text style={styles.cardTextFav}>Wallys</Text>
-            <TouchableOpacity style={styles.heartIconFav}>
-              <Icon name="heart" size={20} color="white" />
+            <Text style={styles.cardTextFav}>{business.name}</Text>
+            <TouchableOpacity 
+              style={styles.heartIconFav} 
+              onPress={() => toggleFavorite(business.id)}
+            >
+              <Icon name="heart" size={20} color="#ff0000" />
             </TouchableOpacity>
           </TouchableOpacity>
-
-          {/* Card 2 */}
-          <TouchableOpacity
-            style={styles.cardFav}
-            onPress={() => navigation.navigate("BusinessPage")}
-          >
-            <Image
-              source={require("./assets/Cover_Wallys.jpg")}
-              style={styles.cardImageFav}
-              resizeMode="cover"
-            />
-            <Text style={styles.cardTextFav}>Wallys</Text>
-            <TouchableOpacity style={styles.heartIconFav}>
-              <Icon name="heart" size={20} color="white" />
-            </TouchableOpacity>
-          </TouchableOpacity>
-
-          {/* Card 3 to demonstrate scroll */}
-          <TouchableOpacity
-            style={styles.cardFav}
-            onPress={() => navigation.navigate("BusinessPage")}
-          >
-            <Image
-              source={require("./assets/Cover_Wallys.jpg")}
-              style={styles.cardImageFav}
-              resizeMode="cover"
-            />
-            <Text style={styles.cardTextFav}>Wallys</Text>
-            <TouchableOpacity style={styles.heartIconFav}>
-              <Icon name="heart" size={20} color="white" />
-            </TouchableOpacity>
-          </TouchableOpacity>
-        </View>
+        ))}
       </ScrollView>
-
-      {/* BottomNavBar at the bottom */}
       <BottomNavBar activeLink="Profile" navigation={navigation} />
     </SafeAreaView>
   );
 };
-/*
-const styles = StyleSheet.create({
-  container2: {
-    flex: 1,
-    backgroundColor: "#1E1E1E",
-  },
-  scrollContainer: {
-    flexGrow: 1,
-  },
-  cardContainerFav: {
-    marginBottom: 50,
-  },
-  cardFav: {
-    margin: 30,
-    borderRadius: 2,
-    overflow: "hidden",
-    borderColor: "#ffffff",
-    boxShadow: "rgb(121, 149, 255) 0px 0px 16px 4px",
-    position: "relative",
-  },
-  cardImageFav: {
-    width: "100%",
-    height: 200,
-  },
-  cardTextFav: {
-    padding: 10,
-    textAlign: "center",
-    color: "white",
-    fontWeight: "bold",
-  },
-  heartIconFav: {
-    position: "absolute",
-    top: 10,
-    right: 10,
-  },
-});
-*/
+
 export default Favorites;
+

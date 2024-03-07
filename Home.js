@@ -63,7 +63,7 @@ const Home = ({ navigation }) => {
         style={styles.scrollView}
         showsHorizontalScrollIndicator={true}
       >
-        {businesses.slice(0,3).map((business) => (
+        {businesses.slice(0,6).map((business) => (
           <TouchableOpacity
             key={business.id}
             style={styles.businessBox}

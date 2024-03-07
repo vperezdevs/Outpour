@@ -1,51 +1,82 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
   Image,
-  StyleSheet,
   SafeAreaView,
-} from "react-native";
-import PageTitle from "./PageTitle";
-import BottomNavBar from "./BottomNavBar";
-import styles from "./styles";
+  ScrollView,
+} from 'react-native';
+import PageTitle from './PageTitle';
+import BottomNavBar from './BottomNavBar';
+import { db, auth } from './firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import styles from './styles';
+
+// Placeholder image import
+const placeholderProfilePic = require("./assets/ProfilePicturePlaceholder.png");
 
 const Friends = ({ navigation }) => {
+  const [friends, setFriends] = useState([]);
+
+  useEffect(() => {
+    const fetchFriendsData = async () => {
+      const user = auth.currentUser;
+      if (!user) {
+        console.log('No user signed in');
+        return;
+      }
+
+      // Fetch the current user's document to get the friends list
+      const userRef = doc(db, 'users', user.uid);
+      const userDoc = await getDoc(userRef);
+
+      if (userDoc.exists()) {
+        const userFriendsUids = userDoc.data().friends || []; // Assuming 'friends' is an array of user IDs
+        const fetchedFriends = await Promise.all(
+          userFriendsUids.map(async (uid) => {
+            const friendRef = doc(db, 'users', uid);
+            const friendDoc = await getDoc(friendRef);
+            if (friendDoc.exists()) {
+              return {
+                id: uid,
+                userName: friendDoc.data().userName || 'No Username',
+                name: friendDoc.data().name || 'No Name',
+                profilePictureUrl: friendDoc.data().profilePictureUrl, // Fallback handled when rendering
+              };
+            } else {
+              console.log('Friend not found');
+              return null;
+            }
+          })
+        );
+
+        setFriends(fetchedFriends.filter(friend => friend !== null));
+      } else {
+        console.log('No such user document!');
+      }
+    };
+
+    fetchFriendsData();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container2}>
-      {/* Header with Heading */}
-      <View>
-        <PageTitle
-          title="Friends"
-          showBackButton={true}
-          backgroundColor="#BE4621"
-          navigation={navigation}
-        />
-      </View>
-      <View style={styles.container2}>
-        {/* List of Friends */}
-        <View style={styles.friendList}>
-          {renderFriend("Joana Summit", require("./assets/friend1.jpg"))}
-          {renderFriend("Chris Lake", require("./assets/friend2.jpg"))}
-          {renderFriend("Max Stelar", require("./assets/friend3.jpg"))}
-          {renderFriend("Denniz Cruz", require("./assets/friend4.jpg"))}
-          {renderFriend("Davina Guetta", require("./assets/friend5.jpg"))}
-        </View>
-      </View>
+      <PageTitle title="Friends" showBackButton={true} backgroundColor="#BE4621" navigation={navigation} />
+      <ScrollView contentContainerStyle={styles.friendList}>
+        {friends.map(friend => (
+          <View key={friend.id} style={styles.friendContainer}>
+            <View style={styles.friendContent}>
+              <Image 
+                source={friend.profilePictureUrl ? { uri: friend.profilePictureUrl } : placeholderProfilePic} 
+                style={styles.friendImage} 
+              />
+              <Text style={styles.friendName}>{friend.userName} - {friend.name}</Text>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
       <BottomNavBar activeLink="Profile" navigation={navigation} />
     </SafeAreaView>
-  );
-};
-
-const renderFriend = (name, imageSource) => {
-  return (
-    <View style={styles.friendContainer}>
-      <View style={styles.friendContent}>
-        <Image source={imageSource} style={styles.friendImage} />
-        <Text style={styles.friendName}>{name}</Text>
-      </View>
-    </View>
   );
 };
 

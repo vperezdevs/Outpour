@@ -5,13 +5,13 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  TextInput,
   Platform,
 } from "react-native";
 import Slider from "@react-native-community/slider";
-import { db } from "./firebase";
-import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
+import { db, auth } from "./firebase";
+import { doc, getDoc, collection, query, where, getDocs, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import MapView, { Marker } from "react-native-maps";
+import Icon from "react-native-vector-icons/FontAwesome";
 import styles from "./styles";
 
 const BusinessPage = ({ route, navigation }) => {
@@ -19,6 +19,7 @@ const BusinessPage = ({ route, navigation }) => {
   const [businessDetails, setBusinessDetails] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [activeSection, setActiveSection] = useState("reviews");
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     const fetchBusinessDataAndReviews = async () => {
@@ -32,19 +33,20 @@ const BusinessPage = ({ route, navigation }) => {
           const lng = parseFloat(data.lng);
           setBusinessDetails({ id: docSnap.id, ...data, coordinates: { lat, lng } });
 
-          // Ensure you've imported and correctly used the query, where, and getDocs functions
-          const reviewsRef = collection(db, "reviews");
-          const q = query(reviewsRef, where("businessId", "==", businessId)); // Make sure 'businessId' matches the field name in your Firestore
+          const q = query(collection(db, "reviews"), where("businessId", "==", businessId));
           const querySnapshot = await getDocs(q);
-
-          const fetchedReviews = querySnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-
-          setReviews(fetchedReviews);
+          setReviews(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
         } else {
           console.log("No such business!");
+        }
+
+        const user = auth.currentUser;
+        if (user) {
+          const userRef = doc(db, "users", user.uid);
+          const userSnap = await getDoc(userRef);
+          if (userSnap.exists() && userSnap.data().favorites?.includes(businessId)) {
+            setIsFavorite(true);
+          }
         }
       }
     };
@@ -52,31 +54,37 @@ const BusinessPage = ({ route, navigation }) => {
     fetchBusinessDataAndReviews();
   }, [businessId]);
 
-  const handleNavClick = (section) => {
-    setActiveSection(section);
+  const handleNavClick = (section) => setActiveSection(section);
+
+  const toggleFavorite = async () => {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const userRef = doc(db, "users", user.uid);
+    if (isFavorite) {
+      await updateDoc(userRef, { favorites: arrayRemove(businessId) });
+    } else {
+      await updateDoc(userRef, { favorites: arrayUnion(businessId) });
+    }
+    setIsFavorite(!isFavorite);
   };
 
   return (
     <View style={styles.containerBis}>
-      {/* Back link */}
-      <TouchableOpacity
-        style={styles.backLinkBis}
-        onPress={() => navigation.goBack()}
-      >
+      <TouchableOpacity style={styles.backLinkBis} onPress={() => navigation.goBack()}>
         <Text style={styles.backLinkTextBis}>Back</Text>
       </TouchableOpacity>
 
       <ScrollView style={styles.containerBis}>
-        {/* Dynamically display banner image and business details */}
         {businessDetails && (
           <>
-            <Image
-              source={{ uri: businessDetails.bannerImage }}
-              style={styles.bannerImageBis}
-            />
+            <Image source={{ uri: businessDetails.bannerImage }} style={styles.bannerImageBis} />
             <View style={styles.businessDetailsContainerBis}>
               <Text style={styles.businessNameBis}>{businessDetails.name}</Text>
               <Text style={styles.businessAddressBis}>{businessDetails.address}</Text>
+              <TouchableOpacity onPress={toggleFavorite} style={{ position: 'absolute', top: 10, right: 10, zIndex: 1 }}>
+                <Icon name={isFavorite ? "heart" : "heart-o"} size={24} color="red" />
+              </TouchableOpacity>
             </View>
           </>
         )}

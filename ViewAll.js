@@ -1,104 +1,44 @@
-import React from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  ScrollView,
-} from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
-import BottomNavBar from "./BottomNavBar";
-import PageTitle from "./PageTitle";
-import BusinessPage from "./BusinessPage";
-import styles from "./styles";
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { db } from './firebase'; // Ensure this is the correct path to your Firebase config
+import { collection, getDocs } from 'firebase/firestore';
+import BottomNavBar from './BottomNavBar';
+import styles from './styles';
 
 const ViewAll = ({ navigation }) => {
+  const [businesses, setBusinesses] = useState([]);
+
+  useEffect(() => {
+    const fetchBusinesses = async () => {
+      const querySnapshot = await getDocs(collection(db, 'businesses'));
+      const businessesData = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setBusinesses(businessesData);
+    };
+
+    fetchBusinesses();
+  }, []);
+
   return (
     <View style={styles.container2}>
-      <ScrollView
-        contentContainerStyle={styles.scrollContainer}
-        keyboardShouldPersistTaps="handled"
-      >
-        {/* Clickable Cards */}
+      <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
         <View style={styles.cardContainer}>
-          {/* Card 1 */}
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => navigation.navigate("BusinessPage")}
-          >
-            <Image
-              source={require("./assets/Cover_Wallys.jpg")}
-              style={styles.cardImage}
-              resizeMode="cover"
-            />
-            <Text style={styles.cardText}>Wallys</Text>
-          </TouchableOpacity>
-
-          {/* Card 3 */}
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => navigation.navigate("BusinessPage")}
-          >
-            <Image
-              source={require("./assets/Cover_WillsPub.png")}
-              style={styles.cardImage}
-              resizeMode="cover"
-            />
-            <Text style={styles.cardText}>Will's Pub</Text>
-          </TouchableOpacity>
-
-          {/* Card 4 */}
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => navigation.navigate("BusinessPage")}
-          >
-            <Image
-              source={require("./assets/Cover_WillsPub.png")}
-              style={styles.cardImage}
-              resizeMode="cover"
-            />
-            <Text style={styles.cardText}>Will's Pub</Text>
-          </TouchableOpacity>
-          {/* Card 5 */}
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => navigation.navigate("BusinessPage")}
-          >
-            <Image
-              source={require("./assets/Cover_Wallys.jpg")}
-              style={styles.cardImage}
-              resizeMode="cover"
-            />
-            <Text style={styles.cardText}>Wallys</Text>
-          </TouchableOpacity>
-
-          {/* Card 6 */}
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => navigation.navigate("BusinessPage")}
-          >
-            <Image
-              source={require("./assets/Cover_Wallys.jpg")}
-              style={styles.cardImage}
-              resizeMode="cover"
-            />
-            <Text style={styles.cardText}>Wallys</Text>
-          </TouchableOpacity>
-          {/* Card 6 */}
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => navigation.navigate("BusinessPage")}
-          >
-            <Image
-              source={require("./assets/Cover_WillsPub.png")}
-              style={styles.cardImage}
-              resizeMode="cover"
-            />
-            <Text style={styles.cardText}>Will's Pub</Text>
-          </TouchableOpacity>
-          {/* Add similar blocks for Card 3 to Card 6 */}
+          {businesses.map((business) => (
+            <TouchableOpacity
+              key={business.id}
+              style={styles.card}
+              onPress={() => navigation.navigate('BusinessPage', { businessId: business.id })}
+            >
+              <Image
+                source={{ uri: business.imageUrl }} // Assuming you have a coverImage field in your documents
+                style={styles.cardImage}
+                resizeMode="cover"
+              />
+              <Text style={styles.cardText}>{business.name}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
       </ScrollView>
       <BottomNavBar activeLink="Home" navigation={navigation} />

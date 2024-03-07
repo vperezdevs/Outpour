@@ -1,102 +1,65 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
   Image,
-  StyleSheet,
   ScrollView,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import BottomNavBar from "./BottomNavBar";
 import PageTitle from "./PageTitle";
-import BusinessPage from "./BusinessPage";
+import { db } from "./firebase"; // Ensure this points to your firebase config file
 import styles from "./styles";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 const Search = ({ navigation }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    const fetchSearchResults = async () => {
+      if (searchQuery.trim() === '') {
+        setSearchResults([]);
+        return;
+      }
+      const businessesRef = collection(db, "businesses");
+      const q = query(businessesRef, where("name", ">=", searchQuery), where("name", "<=", searchQuery + '\uf8ff'));
+      const querySnapshot = await getDocs(q);
+      const results = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setSearchResults(results);
+    };
+
+    fetchSearchResults();
+  }, [searchQuery]);
+
   return (
     <View style={styles.container}>
-      <ScrollView
-        contentContainerStyle={styles.scrollContainer}
-        keyboardShouldPersistTaps="handled"
-      >
+      <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
         <View style={styles.searchContainer}>
-          <TextInput style={styles.searchInput} placeholder="Search..." />
-          <Icon
-            name="search"
-            size={20}
-            color="gray"
-            style={styles.searchIcon}
+          <TextInput 
+            style={styles.searchInput} 
+            placeholder="Search..."
+            value={searchQuery}
+            onChangeText={setSearchQuery}
           />
-          <TouchableOpacity style={styles.filterButton}>
-            {/* Placeholder icon for filtering */}
-            <Icon
-              name="filter"
-              size={20}
-              color="white"
-              style={styles.filterIcon}
-            />
-          </TouchableOpacity>
         </View>
-        {/* Clickable Cards */}
+        {/* Dynamically generated search results */}
         <View style={styles.cardContainer}>
-          {/* Card 1 */}
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => navigation.navigate("BusinessPage")}
-          >
-            <Image
-              source={require("./assets/Cover_Wallys.jpg")}
-              style={styles.cardImage}
-              resizeMode="cover"
-            />
-            <Text style={styles.cardText}>Wallys</Text>
-          </TouchableOpacity>
-
-          {/* Card 3 */}
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => navigation.navigate("BusinessPage")}
-          >
-            <Image
-              source={require("./assets/Cover_WillsPub.png")}
-              style={styles.cardImage}
-              resizeMode="cover"
-            />
-            <Text style={styles.cardText}>Will's Pub</Text>
-          </TouchableOpacity>
-
-          {/* Card 4 */}
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => navigation.navigate("BusinessPage")}
-          >
-            <Image
-              source={require("./assets/Cover_WillsPub.png")}
-              style={styles.cardImage}
-              resizeMode="cover"
-            />
-            <Text style={styles.cardText}>Will's Pub</Text>
-          </TouchableOpacity>
-          {/* Card 5 */}
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => navigation.navigate("BusinessPage")}
-          >
-            <Image
-              source={require("./assets/Cover_Wallys.jpg")}
-              style={styles.cardImage}
-              resizeMode="cover"
-            />
-            <Text style={styles.cardText}>Wallys</Text>
-          </TouchableOpacity>
+          {searchResults.map((business) => (
+            <TouchableOpacity key={business.id} style={styles.card} onPress={() => navigation.navigate("BusinessPage", { businessId: business.id })}>
+              <Image source={{ uri: business.bannerImage }} style={styles.cardImage} resizeMode="cover" />
+              <Text style={styles.cardText}>{business.name}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
       </ScrollView>
       <BottomNavBar activeLink="Search" navigation={navigation} />
     </View>
   );
 };
+
 
 /*
 const styles = StyleSheet.create({

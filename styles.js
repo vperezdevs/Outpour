@@ -241,104 +241,46 @@ export default StyleSheet.create({
     height: 200,
   },
 
-  //from Search.js
-  header: {
-    marginBottom: 20,
-  },
-  orangeStrip: {
-    backgroundColor: "#BE4621",
-    padding: 15,
-    width: "100%",
-    alignItems: "center",
-  },
-  heading: {
-    color: "#ffffff",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  searchContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 20,
-    marginTop: 50,
-    position: "relative",
-  },
-  scrollContainer: {
-    flexGrow: 1,
-  },
-  scrollContainer2: {
-    flexGrow: 1,
-    marginTop: 20,
-  },
-  searchInput: {
-    flex: 1,
-    height: 40,
-    borderColor: "white",
-    color: "white",
-    borderWidth: 1,
-    marginTop: 10,
-    paddingLeft: 30,
-    borderRadius: 5,
-    marginLeft: 10,
-  },
-  searchIcon: {
-    position: "absolute",
-    right: 50,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
-  },
-  filterButton: {
-    padding: 10,
-    borderRadius: 5,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  filterIcon: {
-    position: "absolute",
-  },
-  cardContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    margin: 10,
-  },
-  card: {
-    width: "48%",
-    marginBottom: 10,
-    borderRadius: 10,
-    overflow: "hidden",
-  },
-  cardImage: {
-    width: "100%",
-    height: 200,
-  },
-  cardText: {
-    padding: 10,
-    textAlign: "center",
-    backgroundColor: "#AAC6FD",
-    color: "black",
-  },
-  bottomNavBar: {
-    backgroundColor: "#1E1E1E",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    paddingVertical: 10,
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-  navItem: {
-    flex: 1,
-    alignItems: "center",
-    paddingBottom: 20,
-  },
-  navItemText: {
-    color: "#ffffff",
-  },
+ //from Search.js
+ searchContainer: {
+  flexDirection: "row",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: 10,
+  marginTop: 30,
+},
+searchInput: {
+  width: "100%", // Ensures search bar takes the full width
+  height: 40,
+  borderColor: "white",
+  borderWidth: 1,
+  borderRadius: 5,
+  color: "white",
+  paddingHorizontal: 10,
+},
+cardContainer: {
+  flexDirection: "row",
+  flexWrap: "wrap",
+  justifyContent: "space-around", // This helps distribute space around the cards evenly
+  padding: 10,
+},
+card: {
+  width: 160, // Fixed width for cards
+  height: 250, // Fixed height to ensure consistency
+  marginBottom: 10,
+  borderRadius: 10,
+  overflow: "hidden",
+},
+cardImage: {
+  width: "100%",
+  height: "80%", // Makes sure the image covers 80% of the card height
+},
+cardText: {
+  textAlign: "center",
+  backgroundColor: "#AAC6FD",
+  color: "black",
+  height: "20%", // Remaining height for text
+},
 
   //from Profile.js
   title: {
@@ -464,6 +406,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 10,
+    paddingRight: 50,
     // Add more styles as needed
   },
   ratingTextBis: {
