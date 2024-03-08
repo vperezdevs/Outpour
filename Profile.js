@@ -67,7 +67,7 @@ const Profile = ({ navigation }) => {
   };
 
   // Determine the source for the profile picture
-  const profilePictureSource = userInfo?.profilePictureUrl ? { uri: userInfo.profilePictureUrl } : placeholderProfilePic;
+  const profilePictureSource = userInfo?.userProfilePic ? { uri: userInfo.userProfilePic } : placeholderProfilePic;
 
   return (
     <SafeAreaView style={styles.container}>

@@ -41,7 +41,7 @@ const Friends = ({ navigation }) => {
                 id: uid,
                 userName: friendDoc.data().userName || 'No Username',
                 name: friendDoc.data().name || 'No Name',
-                profilePictureUrl: friendDoc.data().profilePictureUrl, // Fallback handled when rendering
+                profilePictureUrl: friendDoc.data().userProfilePic, // Fallback handled when rendering
               };
             } else {
               console.log('Friend not found');

@@ -1,55 +1,70 @@
 import React, { useEffect, useState } from "react";
 import { View, ScrollView, TouchableOpacity, Image, Text } from "react-native";
 import BottomNavBar from "./BottomNavBar";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import {db} from "./firebase";
 import styles from "./styles";
 
 const Home = ({ navigation }) => {
   const [businesses, setBusinesses] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [bannerAds, setBannerAds] = useState([]); 
 
   useEffect(() => {
-    const fetchBusinesses = async () => {
-      const querySnapshot = await getDocs(collection(db, "businesses"));
-      const businessesData = querySnapshot.docs.map((doc) => ({
+    const fetchBusinessesAndAds = async () => {
+      const querySnapshotBusinesses = await getDocs(collection(db, "businesses"));
+      const businessesData = querySnapshotBusinesses.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
       setBusinesses(businessesData);
-    };
 
-    const fetchReviews = async () => {
-      const querySnapshot = await getDocs(collection(db, "reviews"));
-      const reviewsData = querySnapshot.docs.map((doc) => ({
+      const querySnapshotBannerAds = await getDocs(collection(db, "bannerAds")); // Adjust "bannerAds" to match your collection name
+      const bannerAdsData = querySnapshotBannerAds.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      setReviews(reviewsData);
+      setBannerAds(bannerAdsData); // Update state with fetched banner ads
     };
 
-    fetchBusinesses();
-    fetchReviews();
+    const unsubscribeReviews = onSnapshot(collection(db, "reviews"), (querySnapshot) => {
+      const reviewsData = querySnapshot.docs.map((doc) => {
+        const data = doc.data();
+        const reviewDate = data.reviewDate ? data.reviewDate.toDate().toLocaleDateString() : ''; // or .toLocaleString() for date and time
+        return {
+          id: doc.id,
+          ...data,
+          reviewDate, // Now a readable string
+        };
+      });
+      setReviews(reviewsData);
+    });
+
+    fetchBusinessesAndAds();
+
+    // Clean up the subscription
+    return () => {
+      unsubscribeReviews();
+    };
   }, []);
 
-  const bannerImageUrl = 'https://firebasestorage.googleapis.com/v0/b/outpour-4a343.appspot.com/o/ads%2FHome_Banner1.png?alt=media&token=b21d0f6b-aa44-4811-a9d9-fbdcd2da18ed';
   return (
     <View style={styles.container}>
-        <ScrollView
-          horizontal={true}
-          style={styles.scrollView}
-          showsHorizontalScrollIndicator={true}
-        >
-          {Array.from({ length: 5 }).map((_, index) => (
-            <View key={index} style={styles.box}>
-              <Image
-                source={{ uri: bannerImageUrl }}
-                style={styles.imageStyle}
-                resizeMode="stretch"
-              />
-            </View>
-          ))}
-        </ScrollView>
+   <ScrollView
+        horizontal={true}
+        style={styles.scrollView}
+        showsHorizontalScrollIndicator={true}
+      >
+        {bannerAds.map((ad) => (
+          <View key={ad.id} style={styles.box}>
+            <Image
+              source={{ uri: ad.bannerImage }}
+              style={styles.imageStyle}
+              resizeMode="stretch"
+            />
+          </View>
+        ))}
+      </ScrollView>
 
       <View style={styles.recommendedHeader}>
         <Text style={styles.recommendedText}>Recommended for you</Text>
@@ -80,7 +95,7 @@ const Home = ({ navigation }) => {
       </ScrollView>
 
       <View style={styles.reviewsHeader}>
-        <Text style={styles.reviewsHeaderText}>Your friends are saying:</Text>
+        <Text style={styles.reviewsHeaderText}>People are saying:</Text>
       </View>
 
       <ScrollView
