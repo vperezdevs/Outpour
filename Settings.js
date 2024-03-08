@@ -9,25 +9,28 @@ import {
 } from "react-native";
 import PageTitle from "./PageTitle";
 import { CommonActions } from "@react-navigation/native";
+import { auth } from './firebase'; // Ensure auth is exported from your firebase config
+import { signOut } from 'firebase/auth';
 import styles from "./styles";
-// Import CommonActions
 
 const Settings = ({ navigation }) => {
   const [notifications, setNotifications] = useState(false);
-  //placeholders for darkmode and notifications
 
   const toggleNotifications = () => {
     setNotifications(!notifications);
   };
 
   const handleLogout = () => {
-    // Reset the navigation state to the initial route
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: "SignInScreen" }],
-      })
-    );
+    signOut(auth).then(() => {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: "SignInScreen" }],
+        })
+      );
+    }).catch((error) => {
+      console.error("Sign out error", error);
+    });
   };
 
   const renderInput = (label, value, onToggle) => {
