@@ -6,13 +6,16 @@ import {
   TouchableOpacity,
   ScrollView,
   Platform,
+  TextInput, // Add this line
 } from "react-native";
 import Slider from "@react-native-community/slider";
 import { db, auth } from "./firebase";
-import { doc, getDoc, collection, query, where, getDocs, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { doc, getDoc, collection, query, where, getDocs, updateDoc, arrayUnion, arrayRemove, addDoc } from "firebase/firestore";
 import MapView, { Marker } from "react-native-maps";
 import Icon from "react-native-vector-icons/FontAwesome";
 import styles from "./styles";
+
+const placeholderProfilePic = require('./assets/ProfilePicturePlaceholder.png');
 
 const BusinessPage = ({ route, navigation }) => {
   const { businessId } = route.params;
@@ -20,26 +23,46 @@ const BusinessPage = ({ route, navigation }) => {
   const [reviews, setReviews] = useState([]);
   const [activeSection, setActiveSection] = useState("reviews");
   const [isFavorite, setIsFavorite] = useState(false);
+  const [reviewText, setReviewText] = useState('');
+  const [rating1, setRating1] = useState(1);
+  const [rating2, setRating2] = useState(1);
+  const [rating3, setRating3] = useState(1);
+  const [rating4, setRating4] = useState(1);
 
   useEffect(() => {
     const fetchBusinessDataAndReviews = async () => {
       if (businessId) {
         const docRef = doc(db, "businesses", businessId);
         const docSnap = await getDoc(docRef);
-
+  
         if (docSnap.exists()) {
           const data = docSnap.data();
           const lat = parseFloat(data.lat);
           const lng = parseFloat(data.lng);
           setBusinessDetails({ id: docSnap.id, ...data, coordinates: { lat, lng } });
-
+  
           const q = query(collection(db, "reviews"), where("businessId", "==", businessId));
           const querySnapshot = await getDocs(q);
-          setReviews(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+  
+          // Enhanced reviews with date conversion
+          const enhancedReviews = querySnapshot.docs.map(doc => {
+            const reviewData = doc.data();
+  
+            // Convert the Firestore timestamp to a JavaScript Date object then to a string
+            const reviewDate = reviewData.reviewDate ? reviewData.reviewDate.toDate().toLocaleString() : 'No date specified';
+  
+            return {
+              id: doc.id,
+              ...reviewData,
+              reviewDate, // Now a string that can be safely rendered
+            };
+          });
+  
+          setReviews(enhancedReviews);
         } else {
           console.log("No such business!");
         }
-
+  
         const user = auth.currentUser;
         if (user) {
           const userRef = doc(db, "users", user.uid);
@@ -69,6 +92,49 @@ const BusinessPage = ({ route, navigation }) => {
     setIsFavorite(!isFavorite);
   };
 
+  const submitReview = async () => {
+    if (!auth.currentUser) {
+      console.log("User not logged in");
+      return;
+    }
+  
+    // Fetch the user's profile document from Firestore
+    const userRef = doc(db, "users", auth.currentUser.uid);
+    const userSnap = await getDoc(userRef);
+    let userProfilePic = userSnap.exists() ? userSnap.data().userProfilePic : null;
+  
+    if (!userSnap.exists()) {
+      console.log("No such user!");
+      return;
+    }
+  
+    // Extract userName from the user's profile document
+    const userName = userSnap.data().userName; // Adjust according to your database schema
+  
+    const review = {
+      businessId: businessDetails.id,
+      reviewContent: reviewText,
+      rating1,
+      rating2,
+      rating3,
+      rating4,
+      reviewLocation: businessDetails.name,
+      reviewDate: new Date(), // Consider using Firebase server timestamp
+      userId: auth.currentUser.uid,
+      userName,
+      userProfilePic // Include the userName in the review
+    };
+  
+    try {
+      const reviewsRef = collection(db, "reviews");
+      await addDoc(reviewsRef, review);
+      console.log("Review submitted successfully");
+      // Update the state or UI accordingly
+    } catch (error) {
+      console.error("Error submitting review: ", error);
+    }
+  };
+  
   return (
     <View style={styles.containerBis}>
       <TouchableOpacity style={styles.backLinkBis} onPress={() => navigation.goBack()}>
@@ -180,7 +246,7 @@ const BusinessPage = ({ route, navigation }) => {
             </View>
             <View style={styles.ratingTextBoxBis}>
               <Text style={styles.ratingTextBis}>
-                Users rate this bar highly for its drinks and customer service.
+                No data for rating aggregation currently available!
               </Text>
             </View>
           </View>
@@ -192,10 +258,15 @@ const BusinessPage = ({ route, navigation }) => {
       reviews.map((review) => (
         <View key={review.id} style={styles.reviewBoxBis}>
           <View style={styles.reviewHeaderBis}>
-            <Image source={{ uri: review.userProfilePic }} style={styles.userProfilePicBis} />
+                <Image
+                source={{ uri: review.userProfilePic || placeholderProfilePic }}
+                style={styles.userProfilePicBis}
+              />
             <View>
               <Text style={styles.userNameBis}>{review.userName}</Text>
-              <Text style={styles.reviewDateBis}>{review.reviewDate}</Text>
+              {review.reviewDate ? (
+                <Text style={styles.reviewDateBis}>{review.reviewDate.toString()}</Text>
+              ) : null}
             </View>
           </View>
           <Text style={styles.reviewContentBis}>{review.reviewContent}</Text>
@@ -222,7 +293,29 @@ const BusinessPage = ({ route, navigation }) => {
               step={0.5}
               value={review.rating2 || 0} // Use review.rating2 or default to 0 if undefined
             />
-            {/* Additional sliders as needed */}
+            {/* Slider 3 */}
+            <Slider
+              style={styles.sliderBis}
+              minimumValue={1}
+              maximumValue={5}
+              minimumTrackTintColor="#0057FF"
+              maximumTrackTintColor="#FA2222"
+              thumbTintColor="#FFFFFF"
+              step={0.5}
+              value={review.rating3 || 0} // Use review.rating2 or default to 0 if undefined
+        />
+            {/* Slider 4 */}
+            <Slider
+              style={styles.sliderBis}
+              minimumValue={1}
+              maximumValue={5}
+              minimumTrackTintColor="#0057FF"
+              maximumTrackTintColor="#FA2222"
+              thumbTintColor="#FFFFFF"
+              step={0.5}
+              value={review.rating4 || 0} // Use review.rating2 or default to 0 if undefined
+        />
+        
           </View>
         </View>
       ))
@@ -236,12 +329,47 @@ const BusinessPage = ({ route, navigation }) => {
             <TextInput
               style={styles.rateInputBis}
               placeholder="Write your review..."
+              value={reviewText}
+              onChangeText={setReviewText} // Update state on text change
             />
+
 
             <View style={styles.iconSliderContainerBis}>
               <View style={styles.iconPlaceholderBis} />
               <View stle={styles.sliderContainerBis}>
-                <Slider
+              <Slider
+                style={styles.sliderBis}
+                minimumValue={1}
+                maximumValue={5}
+                minimumTrackTintColor="#0057FF"
+                maximumTrackTintColor="#FA2222"
+                thumbTintColor="#FFFFFF"
+                step={0.5}
+                onValueChange={setRating1} // Update state on slider change
+                value={rating1}
+              />
+              </View>
+            </View>
+            <View style={styles.iconSliderContainerBis}>
+              <View style={styles.iconPlaceholderBis} />
+              <View stle={styles.sliderContainerBis}>
+              <Slider
+                style={styles.sliderBis}
+                minimumValue={1}
+                maximumValue={5}
+                minimumTrackTintColor="#0057FF"
+                maximumTrackTintColor="#FA2222"
+                thumbTintColor="#FFFFFF"
+                step={0.5}
+                onValueChange={setRating2} // Update state on slider change
+                value={rating2}
+              />
+              </View>
+            </View>
+            <View style={styles.iconSliderContainerBis}>
+              <View style={styles.iconPlaceholderBis} />
+              <View stle={styles.sliderContainerBis}>
+              <Slider
                   style={styles.sliderBis}
                   minimumValue={1}
                   maximumValue={5}
@@ -249,14 +377,15 @@ const BusinessPage = ({ route, navigation }) => {
                   maximumTrackTintColor="#FA2222"
                   thumbTintColor="#FFFFFF"
                   step={0.5}
-                  value={4}
+                  onValueChange={setRating3} // Update state on slider change
+                  value={rating3}
                 />
               </View>
             </View>
             <View style={styles.iconSliderContainerBis}>
               <View style={styles.iconPlaceholderBis} />
               <View stle={styles.sliderContainerBis}>
-                <Slider
+              <Slider
                   style={styles.sliderBis}
                   minimumValue={1}
                   maximumValue={5}
@@ -264,48 +393,17 @@ const BusinessPage = ({ route, navigation }) => {
                   maximumTrackTintColor="#FA2222"
                   thumbTintColor="#FFFFFF"
                   step={0.5}
-                  value={4}
-                />
-              </View>
-            </View>
-            <View style={styles.iconSliderContainerBis}>
-              <View style={styles.iconPlaceholderBis} />
-              <View stle={styles.sliderContainerBis}>
-                <Slider
-                  style={styles.sliderBis}
-                  minimumValue={1}
-                  maximumValue={5}
-                  minimumTrackTintColor="#0057FF"
-                  maximumTrackTintColor="#FA2222"
-                  thumbTintColor="#FFFFFF"
-                  step={0.5}
-                  value={4}
-                />
-              </View>
-            </View>
-            <View style={styles.iconSliderContainerBis}>
-              <View style={styles.iconPlaceholderBis} />
-              <View stle={styles.sliderContainerBis}>
-                <Slider
-                  style={styles.sliderBis}
-                  minimumValue={1}
-                  maximumValue={5}
-                  minimumTrackTintColor="#0057FF"
-                  maximumTrackTintColor="#FA2222"
-                  thumbTintColor="#FFFFFF"
-                  step={0.5}
-                  value={4}
+                  onValueChange={setRating4} // Update state on slider change
+                  value={rating4}
                 />
               </View>
             </View>
             <TouchableOpacity
-              style={styles.submitButtonBis}
-              onPress={() => {
-                /* Submit action here */
-              }}
-            >
-              <Text style={styles.submitButtonTextBis}> Submit </Text>
-            </TouchableOpacity>
+            style={styles.submitButtonBis}
+            onPress={submitReview} // Attach the submit function here
+          >
+            <Text style={styles.submitButtonTextBis}> Submit </Text>
+          </TouchableOpacity>
           </View>
         )}
       </ScrollView>
