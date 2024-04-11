@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   StyleSheet,
@@ -9,7 +10,7 @@ import {
   StatusBar,
   Pressable,
   Touchable,
-  Alert
+  Alert,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -30,14 +31,13 @@ import ViewAll from "./ViewAll";
 import EditUserBusiness from "./EditUserBusiness";
 import { TouchableOpacity } from "react-native";
 import styles from "./styles";
-import { auth, signInWithEmailAndPassword } from './firebase'; // Adjust this import path as necessary
+import { auth, signInWithEmailAndPassword } from "./firebase"; // Adjust this import path as necessary
 import { useState } from "react";
-
 
 // Separate SignInScreen Component
 const SignInScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
@@ -63,18 +63,18 @@ const SignInScreen = ({ navigation }) => {
           label="Email"
           style={styles.input_blue}
           placeholder="email"
-          onChangeText={text => setEmail(text)}
+          onChangeText={(text) => setEmail(text)}
           value={email} // Ensure the input reflects the current state
-          />
+        />
         <Text style={styles.inputLabelLoggedOut}>Password</Text>
         <TextInput
           label="password"
           style={styles.input_red}
           placeholder="password"
-          onChangeText={text => setPassword(text)}
+          onChangeText={(text) => setPassword(text)}
           value={password} // Ensure the input reflects the current state
           secureTextEntry // This prop hides the password input
-          />
+        />
       </View>
       <View style={styles.button_field}>
         <TouchableOpacity //Signin
@@ -205,15 +205,3 @@ function App() {
 }
 
 export default App;
-
-/*Julian's Notes 2: iOS Boogaloo
--UPDATED the following packages
-  react-native 0.73.2 -> 0.73.4
-  expo@50.0.2 -> 50.0.6
-  @expo/metro-runtime@3.1.2 -> 3.1.3
-
--FIXED ballooned fonts due to fontSize calls (all pages)
-
--MOVED all page component styles to styles.js 
-!NOTE BottomNavBar & PageTitle kept their local style calls
-*/

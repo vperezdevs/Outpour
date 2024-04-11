@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
-import { db } from './firebase'; // Ensure this is the correct path to your Firebase config
+import { db } from './firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import BottomNavBar from './BottomNavBar';
 import styles from './styles';
@@ -32,7 +32,7 @@ const ViewAll = ({ navigation }) => {
               onPress={() => navigation.navigate('BusinessPage', { businessId: business.id })}
             >
               <Image
-                source={{ uri: business.imageUrl }} // Assuming you have a coverImage field in your documents
+                source={{ uri: business.imageUrl }}
                 style={styles.cardImage}
                 resizeMode="cover"
               />

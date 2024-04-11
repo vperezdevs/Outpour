@@ -31,7 +31,7 @@ const Alerts = ({ navigation }) => {
     },
   ];
 
-  // Render each individual alert item
+
   const AlertItem = ({ alert }) => {
     return (
       <View style={styles.alertItemUA}>
@@ -61,7 +61,7 @@ const Alerts = ({ navigation }) => {
     );
   };
 
-  // Render the list of alerts
+
   return (
     <SafeAreaView style={styles.container2}>
       <PageTitle

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -8,72 +8,63 @@ import {
   Text,
   StatusBar,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import styles from "./styles";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+
+// Initialize the Firebase auth object
+const auth = getAuth();
 
 const Forgot = ({ navigation }) => {
+  const [email, setEmail] = useState(""); // State to hold the email input
+
+  // Function to handle sending the password reset email
+  const handleSendLink = () => {
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        // Password reset email sent!
+        alert("Password reset link sent! Check your email.");
+        navigation.navigate("SignInScreen"); // Optionally navigate the user away
+      })
+      .catch((error) => {
+        // Handle errors
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(`Failed to send password reset email: ${errorMessage}`);
+        console.error(error);
+      });
+  };
+
   return (
-    <View style={styles.container}>
-      <Image
-        style={styles.logo}
-        source={require("./assets/Logo_Outpour_Long.png")}
+    <KeyboardAvoidingView style={styles.container}>
+      {/* Your existing code */}
+      <TextInput
+        label="Email"
+        style={{
+          backgroundColor: "#fcfdff",
+          borderWidth: 3,
+          borderColor: "#FF8A8A",
+          borderRadius: 5,
+          padding: 3,
+          height: 40,
+          width: 300,
+        }}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail} // Update the email state on change
       />
-      <Text style={styles.title}>Recover Password</Text>
-      <View style={styles.inputView}>
-        <Text style={styles.inputLabelLoggedOut}>Recovery Email</Text>
-        <TextInput label="Email" style={styles.input_red} placeholder="email" />
-        <Text style={styles.inputLabelLoggedOut}>Confirm Recovery Email</Text>
-        <TextInput
-          label="Confirm"
-          style={styles.input_blue}
-          placeholder="Confirm"
-        />
-        <View style={{ marginTop: 20 }}>
-          <TouchableOpacity //Signin
-            style={styles.submitButtonSU}
-            onPress={() => navigation.navigate("Home")}
-          >
-            <Text styles={styles.submitButtonTextSU}>Send Link</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={{ marginTop: 20 }}>
+        <TouchableOpacity
+          style={styles.submitButtonSU}
+          onPress={handleSendLink} // Use the function here
+        >
+          <Text style={styles.submitButtonTextSU}>Send Link</Text>
+        </TouchableOpacity>
       </View>
-      <StatusBar style="auto" />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
-/*
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#1E1E1E',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    title: {
-      fontWeight: "bold",
-      fontSize: 45,
-      color: "#fcfdff",
-      marginBottom: 40,
-    },
-    inputView: {
-      width: "80%",
-      backgroundColor: "#fcfdff",
-      borderRadius: 25,
-      height: 50,
-    },
-    logo: {
-      width: 300,
-      height: 110
-    },
-    input: {
-      backgroundColor: "#fcfdff",
-    },
-    inputLabelLoggedOut: {
-      color: "#FFF",
-      fontSize: 12,
-      marginTop: 10,
-    },
-  });
-*/
 
 export default Forgot;

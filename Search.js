@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  SafeAreaView,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import BottomNavBar from "./BottomNavBar";
@@ -15,31 +16,40 @@ import styles from "./styles";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
 const Search = ({ navigation }) => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     const fetchSearchResults = async () => {
-      if (searchQuery.trim() === '') {
+      if (searchQuery.trim() === "") {
         setSearchResults([]);
         return;
       }
       const businessesRef = collection(db, "businesses");
-      const q = query(businessesRef, where("name", ">=", searchQuery), where("name", "<=", searchQuery + '\uf8ff'));
+      const lowercaseQuery = searchQuery.toLowerCase(); // Convert search query to lowercase
+      const q = query(
+        businessesRef,
+        where("name_lowercase", ">=", lowercaseQuery),
+        where("name_lowercase", "<=", lowercaseQuery + "\uf8ff")
+      );
       const querySnapshot = await getDocs(q);
-      const results = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const results = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
       setSearchResults(results);
     };
-
+  
     fetchSearchResults();
   }, [searchQuery]);
+  
 
   return (
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
+    <SafeAreaView style={styles.container}>
+      <ScrollView keyboardShouldPersistTaps="handled">
         <View style={styles.searchContainer}>
-          <TextInput 
-            style={styles.searchInput} 
+          <TextInput
+            style={styles.searchInput}
             placeholder="Search..."
             value={searchQuery}
             onChangeText={setSearchQuery}
@@ -48,18 +58,27 @@ const Search = ({ navigation }) => {
         {/* Dynamically generated search results */}
         <View style={styles.cardContainer}>
           {searchResults.map((business) => (
-            <TouchableOpacity key={business.id} style={styles.card} onPress={() => navigation.navigate("BusinessPage", { businessId: business.id })}>
-              <Image source={{ uri: business.bannerImage }} style={styles.cardImage} resizeMode="cover" />
+            <TouchableOpacity
+              key={business.id}
+              style={styles.card}
+              onPress={() =>
+                navigation.navigate("BusinessPage", { businessId: business.id })
+              }
+            >
+              <Image
+                source={{ uri: business.bannerImage }}
+                style={styles.cardImage}
+                resizeMode="cover"
+              />
               <Text style={styles.cardText}>{business.name}</Text>
             </TouchableOpacity>
           ))}
         </View>
       </ScrollView>
       <BottomNavBar activeLink="Search" navigation={navigation} />
-    </View>
+    </SafeAreaView>
   );
 };
-
 
 /*
 const styles = StyleSheet.create({

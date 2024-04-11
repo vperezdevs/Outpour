@@ -12,7 +12,6 @@ import { db, auth } from './firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import styles from './styles';
 
-// Placeholder image import
 const placeholderProfilePic = require("./assets/ProfilePicturePlaceholder.png");
 
 const Friends = ({ navigation }) => {
@@ -26,12 +25,11 @@ const Friends = ({ navigation }) => {
         return;
       }
 
-      // Fetch the current user's document to get the friends list
       const userRef = doc(db, 'users', user.uid);
       const userDoc = await getDoc(userRef);
 
       if (userDoc.exists()) {
-        const userFriendsUids = userDoc.data().friends || []; // Assuming 'friends' is an array of user IDs
+        const userFriendsUids = userDoc.data().friends || [];
         const fetchedFriends = await Promise.all(
           userFriendsUids.map(async (uid) => {
             const friendRef = doc(db, 'users', uid);
@@ -41,7 +39,7 @@ const Friends = ({ navigation }) => {
                 id: uid,
                 userName: friendDoc.data().userName || 'No Username',
                 name: friendDoc.data().name || 'No Name',
-                profilePictureUrl: friendDoc.data().userProfilePic, // Fallback handled when rendering
+                profilePictureUrl: friendDoc.data().userProfilePic,
               };
             } else {
               console.log('Friend not found');

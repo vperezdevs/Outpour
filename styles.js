@@ -1,3 +1,4 @@
+
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
@@ -26,6 +27,11 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     backgroundColor: "#1E1E1E",
+  },
+  containerEP: {
+    flex: 1,
+    backgroundColor: "#1E1E1E",
+    paddingTop: 30,
   },
 
   //for App.js & shared styles
@@ -94,7 +100,7 @@ export default StyleSheet.create({
   },
   logo: {
     width: 300,
-    height: 110,
+    height: 115,
   },
   inputView: {
     width: "80%",
@@ -105,14 +111,14 @@ export default StyleSheet.create({
     borderWidth: 3,
     borderColor: "#FF8A8A",
     borderRadius: 5,
-    padding: 5,
+    padding: 3,
   },
   input_blue: {
     backgroundColor: "#fcfdff",
     borderWidth: 3,
     borderColor: "#75A1F5",
     borderRadius: 5,
-    padding: 5,
+    padding: 3,
   },
   inputLabelLoggedOut: {
     color: "#FFF",
@@ -241,52 +247,53 @@ export default StyleSheet.create({
     height: 200,
   },
 
- //from Search.js
- searchContainer: {
-  flexDirection: "row",
-  justifyContent: "center",
-  alignItems: "center",
-  padding: 10,
-  marginTop: 30,
-},
-searchInput: {
-  width: "100%", // Ensures search bar takes the full width
-  height: 40,
-  borderColor: "white",
-  borderWidth: 1,
-  borderRadius: 5,
-  color: "white",
-  paddingHorizontal: 10,
-},
-cardContainer: {
-  flexDirection: "row",
-  flexWrap: "wrap",
-  justifyContent: "space-around", // This helps distribute space around the cards evenly
-  padding: 10,
-},
-card: {
-  width: 160, // Fixed width for cards
-  height: 250, // Fixed height to ensure consistency
-  marginBottom: 10,
-  borderRadius: 10,
-  overflow: "hidden",
-},
-cardImage: {
-  width: "100%",
-  height: "80%", // Makes sure the image covers 80% of the card height
-},
-cardText: {
-  textAlign: "center",
-  backgroundColor: "#AAC6FD",
-  color: "black",
-  height: "20%", // Remaining height for text
-},
+  //from Search.js
+  searchContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+    paddingTop: 30,
+  },
+  searchInput: {
+    width: "100%", // Ensures search bar takes the full width
+    height: 40,
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 5,
+    color: "white",
+    paddingHorizontal: 10,
+  },
+  cardContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around", // This helps distribute space around the cards evenly
+    padding: 10,
+  },
+  card: {
+    width: 160, // Fixed width for cards
+    height: 250, // Fixed height to ensure consistency
+    marginBottom: 10,
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  cardImage: {
+    width: "100%",
+    height: "80%", // Makes sure the image covers 80% of the card height
+  },
+  cardText: {
+    textAlign: "center",
+    backgroundColor: "#AAC6FD",
+    color: "black",
+    height: "20%", // Remaining height for text
+  },
 
   //from Profile.js
   title: {
     color: "#FFF",
     fontSize: 24,
     fontWeight: "bold",
+    textAlign: "center",
   },
   profilePicture: {
     width: 150, // Set your own width
@@ -369,7 +376,7 @@ cardText: {
     borderWidth: 1,
     padding: 10,
     backgroundColor: "black",
-    color: '#FFFFFF',
+    color: "#FFFFFF",
   },
   updateButton: {
     padding: 15,
@@ -384,6 +391,9 @@ cardText: {
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  pageTitleContainer: {
+    height: 50,
   },
 
   //for BusinessPage.js & UserBusiness.js
@@ -403,7 +413,6 @@ cardText: {
     // ... other styles ...
   },
   businessDetailsContainerBis: {
-    flexDirection: "row",
     justifyContent: "space-between",
     padding: 10,
     paddingRight: 50,

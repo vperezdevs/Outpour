@@ -25,7 +25,6 @@ const Favorites = ({ navigation }) => {
         const docSnap = await getDoc(userRef);
         if (docSnap.exists() && docSnap.data().favorites) {
           const favoriteIds = docSnap.data().favorites; // Array of business IDs
-          // Fetch details for each favorite business
           const favoritesData = await Promise.all(favoriteIds.map(async (id) => {
             const businessRef = doc(db, "businesses", id);
             const businessSnap = await getDoc(businessRef);
@@ -51,7 +50,7 @@ const Favorites = ({ navigation }) => {
           : [...currentFavorites, businessId];
 
         await updateDoc(userRef, { favorites: newFavorites });
-        fetchFavorites(); // Refresh favorites list
+        fetchFavorites();
       }
     }
   };
@@ -72,7 +71,7 @@ const Favorites = ({ navigation }) => {
             onPress={() => navigation.navigate("BusinessPage", { businessId: business.id })}
           >
             <Image
-              source={{ uri: business.imageUrl }} // Use dynamic image URL from Firestore
+              source={{ uri: business.imageUrl }}
               style={styles.cardImageFav}
               resizeMode="cover"
             />

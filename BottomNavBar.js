@@ -1,9 +1,9 @@
 // BottomNavBar.js
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
-import homeIcon from './assets/home.png';
-import searchIcon from './assets/search.png';
-import profileIcon from './assets/Profile.png';
+import homeIcon from "./assets/home.png";
+import searchIcon from "./assets/search.png";
+import profileIcon from "./assets/Profile.png";
 
 const BottomNavBar = ({ activeLink, navigation }) => {
   return (
@@ -14,25 +14,40 @@ const BottomNavBar = ({ activeLink, navigation }) => {
       >
         <Image
           source={homeIcon}
-          style={[styles.navIcon, activeLink === "Home" && styles.activeNavIcon]}
+          style={[
+            styles.navIcon,
+            activeLink === "Home" && styles.activeNavIcon,
+          ]}
         />
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.navItem, activeLink === "Search" && styles.activeNavItem]}
+        style={[
+          styles.navItem,
+          activeLink === "Search" && styles.activeNavItem,
+        ]}
         onPress={() => navigation.navigate("Search")}
       >
         <Image
           source={searchIcon}
-          style={[styles.navIcon, activeLink === "Search" && styles.activeNavIcon]}
+          style={[
+            styles.navIcon,
+            activeLink === "Search" && styles.activeNavIcon,
+          ]}
         />
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.navItem, activeLink === "Profile" && styles.activeNavItem]}
+        style={[
+          styles.navItem,
+          activeLink === "Profile" && styles.activeNavItem,
+        ]}
         onPress={() => navigation.navigate("Profile")}
       >
         <Image
           source={profileIcon}
-          style={[styles.navIcon, activeLink === "Profile" && styles.activeNavIcon]}
+          style={[
+            styles.navIcon,
+            activeLink === "Profile" && styles.activeNavIcon,
+          ]}
         />
       </TouchableOpacity>
     </View>
@@ -46,6 +61,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     paddingVertical: 10,
+    paddingBottom: 30,
     position: "absolute",
     bottom: 0,
     left: 0,
@@ -63,7 +79,7 @@ const styles = StyleSheet.create({
   navIcon: {
     width: 25, // Set your desired icon size
     height: 25,
-    resizeMode: 'contain', // Ensure the icons fit well
+    resizeMode: "contain", // Ensure the icons fit well
   },
   activeNavItem: {
     // Add any styles you want for the active nav item

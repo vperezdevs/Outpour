@@ -1,25 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { View, ScrollView, TouchableOpacity, Image, Text } from "react-native";
+import React, { useEffect, useState, useRef } from "react";
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  Text,
+} from "react-native";
 import BottomNavBar from "./BottomNavBar";
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
-import {db} from "./firebase";
+import { db } from "./firebase";
 import styles from "./styles";
 
 const Home = ({ navigation }) => {
   const [businesses, setBusinesses] = useState([]);
   const [reviews, setReviews] = useState([]);
-  const [bannerAds, setBannerAds] = useState([]); 
+  const [bannerAds, setBannerAds] = useState([]);
+  const [currentAdIndex, setCurrentAdIndex] = useState(0); // New state for tracking the current ad index
+  const bannerAdsRef = useRef(null); // New ref for the banner ads ScrollView
 
   useEffect(() => {
     const fetchBusinessesAndAds = async () => {
-      const querySnapshotBusinesses = await getDocs(collection(db, "businesses"));
+      const querySnapshotBusinesses = await getDocs(
+        collection(db, "businesses")
+      );
       const businessesData = querySnapshotBusinesses.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
       setBusinesses(businessesData);
 
-      const querySnapshotBannerAds = await getDocs(collection(db, "bannerAds")); // Adjust "bannerAds" to match your collection name
+      const querySnapshotBannerAds = await getDocs(
+        collection(db, "bannerAds")
+      ); // Adjust "bannerAds" to match your collection name
       const bannerAdsData = querySnapshotBannerAds.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -27,30 +39,49 @@ const Home = ({ navigation }) => {
       setBannerAds(bannerAdsData); // Update state with fetched banner ads
     };
 
-    const unsubscribeReviews = onSnapshot(collection(db, "reviews"), (querySnapshot) => {
-      const reviewsData = querySnapshot.docs.map((doc) => {
-        const data = doc.data();
-        const reviewDate = data.reviewDate ? data.reviewDate.toDate().toLocaleDateString() : ''; // or .toLocaleString() for date and time
-        return {
-          id: doc.id,
-          ...data,
-          reviewDate, // Now a readable string
-        };
-      });
-      setReviews(reviewsData);
-    });
+    const unsubscribeReviews = onSnapshot(
+      collection(db, "reviews"),
+      (querySnapshot) => {
+        const reviewsData = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+          const reviewDate = data.reviewDate
+            ? data.reviewDate.toDate().toLocaleDateString()
+            : ""; // or .toLocaleString() for date and time
+          return {
+            id: doc.id,
+            ...data,
+            reviewDate, // Now a readable string
+          };
+        });
+        setReviews(reviewsData);
+      }
+    );
 
     fetchBusinessesAndAds();
 
-    // Clean up the subscription
+    // New auto-scroll functionality for banner ads
+    const interval = setInterval(() => {
+      if (bannerAds.length > 0) {
+        const nextIndex = (currentAdIndex + 1) % bannerAds.length; // Loop back to the first ad after the last one
+        setCurrentAdIndex(nextIndex);
+        bannerAdsRef.current?.scrollTo({
+          x: nextIndex * 400, // Assuming each ad is 300px wide; adjust as needed
+          animated: true,
+        });
+      }
+    }, 5000); // Change ad every 3 seconds
+
     return () => {
-      unsubscribeReviews();
+      unsubscribeReviews(); // Clean up the Firestore subscription
+      clearInterval(interval); // Clean up the auto-scroll interval
     };
-  }, []);
+  }, [currentAdIndex, bannerAds.length]); // Depend on currentAdIndex and bannerAds.length
 
   return (
     <View style={styles.container}>
-   <ScrollView
+      {/* ScrollView for banner ads with ref attached */}
+      <ScrollView
+        ref={bannerAdsRef} // Attach the ref here
         horizontal={true}
         style={styles.scrollView}
         showsHorizontalScrollIndicator={true}
@@ -66,10 +97,11 @@ const Home = ({ navigation }) => {
         ))}
       </ScrollView>
 
+      {/* The rest of your component rendering remains unchanged */}
       <View style={styles.recommendedHeader}>
         <Text style={styles.recommendedText}>Recommended for you</Text>
         <TouchableOpacity onPress={() => navigation.navigate("ViewAll")}>
-          <Text style={styles.viewAllText}>View All</Text>
+          <Text style={styles.viewAllText}> View All</Text>
         </TouchableOpacity>
       </View>
 
@@ -78,11 +110,13 @@ const Home = ({ navigation }) => {
         style={styles.scrollView}
         showsHorizontalScrollIndicator={true}
       >
-        {businesses.slice(0,6).map((business) => (
+        {businesses.slice(0, 6).map((business) => (
           <TouchableOpacity
             key={business.id}
             style={styles.businessBox}
-            onPress={() => navigation.navigate("BusinessPage", { businessId: business.id })}
+            onPress={() =>
+              navigation.navigate("BusinessPage", { businessId: business.id })
+            }
           >
             <Image
               source={{ uri: business.imageUrl }}
@@ -106,7 +140,9 @@ const Home = ({ navigation }) => {
         {reviews.map((review) => (
           <TouchableOpacity
             key={review.id}
-            onPress={() => navigation.navigate("BusinessPage", { reviewId: review.id })}
+            onPress={() =>
+              navigation.navigate("BusinessPage", { businessId: review.businessId })
+            }
           >
             <View style={styles.reviewBox}>
               <View style={styles.reviewHeader}>
@@ -132,4 +168,3 @@ const Home = ({ navigation }) => {
 };
 
 export default Home;
-

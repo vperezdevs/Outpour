@@ -72,7 +72,7 @@ const UserReviews = ({ navigation }) => {
                 thumbTintColor="#FFFFFF"
                 step={0.5}
                 value={rating}
-                disabled={true} // Disable slider interaction
+                disabled={true} 
               />
             </View>
           ))}

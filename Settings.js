@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import PageTitle from "./PageTitle";
 import { CommonActions } from "@react-navigation/native";
-import { auth } from './firebase'; // Ensure auth is exported from your firebase config
+import { auth } from './firebase'; 
 import { signOut } from 'firebase/auth';
 import styles from "./styles";
 
