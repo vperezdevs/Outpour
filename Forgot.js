@@ -26,7 +26,7 @@ const Forgot = ({ navigation }) => {
       .then(() => {
         // Password reset email sent!
         alert("Password reset link sent! Check your email.");
-        navigation.navigate("SignInScreen"); // Optionally navigate the user away
+        navigation.navigate("SignInScreen"); 
       })
       .catch((error) => {
         // Handle errors
@@ -58,7 +58,7 @@ const Forgot = ({ navigation }) => {
       <View style={{ marginTop: 20 }}>
         <TouchableOpacity
           style={styles.submitButtonSU}
-          onPress={handleSendLink} // Use the function here
+          onPress={handleSendLink} 
         >
           <Text style={styles.submitButtonTextSU}>Send Link</Text>
         </TouchableOpacity>

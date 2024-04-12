@@ -135,7 +135,7 @@ const BusinessPage = ({ route, navigation }) => {
     }
 
     // Extract userName from the user's profile document
-    const userName = userSnap.data().userName; // Adjust according to your database schema
+    const userName = userSnap.data().userName; 
 
     const review = {
       businessId: businessDetails.id,

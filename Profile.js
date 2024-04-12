@@ -14,6 +14,7 @@ import { doc, getDoc } from "firebase/firestore";
 import styles from "./styles";
 import BottomNavBar from "./BottomNavBar";
 
+//For some reason expo image picker hates firebase so for now this just works in frontend. Fun! 
 
 const placeholderProfilePic = require("./assets/ProfilePicturePlaceholder.png");
 
@@ -31,7 +32,7 @@ const Profile = ({ navigation }) => {
   const [selectedImageUri, setSelectedImageUri] = useState(null);
 
   useEffect(() => {
-    // Fetch user info from Firebase as before
+
     const fetchUserInfo = async () => {
       const user = auth.currentUser;
       if (user) {
@@ -94,7 +95,6 @@ const Profile = ({ navigation }) => {
         {userInfo ? (
           <>
             <Button title="Pick an image from camera roll" onPress={pickImage} />
-            {/* Display the selected image or the user's current profile picture */}
             <Image style={styles.profilePicture} source={profilePictureSource} />
             <Text style={styles.title}>{userInfo.userName}</Text>
             <Text style={styles.title}>{userInfo.name}</Text>

@@ -31,12 +31,12 @@ const Home = ({ navigation }) => {
 
       const querySnapshotBannerAds = await getDocs(
         collection(db, "bannerAds")
-      ); // Adjust "bannerAds" to match your collection name
+      );
       const bannerAdsData = querySnapshotBannerAds.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      setBannerAds(bannerAdsData); // Update state with fetched banner ads
+      setBannerAds(bannerAdsData); 
     };
 
     const unsubscribeReviews = onSnapshot(
@@ -46,11 +46,11 @@ const Home = ({ navigation }) => {
           const data = doc.data();
           const reviewDate = data.reviewDate
             ? data.reviewDate.toDate().toLocaleDateString()
-            : ""; // or .toLocaleString() for date and time
+            : ""; 
           return {
             id: doc.id,
             ...data,
-            reviewDate, // Now a readable string
+            reviewDate, 
           };
         });
         setReviews(reviewsData);
@@ -59,29 +59,28 @@ const Home = ({ navigation }) => {
 
     fetchBusinessesAndAds();
 
-    // New auto-scroll functionality for banner ads
+
     const interval = setInterval(() => {
       if (bannerAds.length > 0) {
-        const nextIndex = (currentAdIndex + 1) % bannerAds.length; // Loop back to the first ad after the last one
+        const nextIndex = (currentAdIndex + 1) % bannerAds.length; 
         setCurrentAdIndex(nextIndex);
         bannerAdsRef.current?.scrollTo({
-          x: nextIndex * 400, // Assuming each ad is 300px wide; adjust as needed
+          x: nextIndex * 400, 
           animated: true,
         });
       }
-    }, 5000); // Change ad every 3 seconds
-
+    }, 5000); 
     return () => {
-      unsubscribeReviews(); // Clean up the Firestore subscription
-      clearInterval(interval); // Clean up the auto-scroll interval
+      unsubscribeReviews(); 
+      clearInterval(interval); 
     };
-  }, [currentAdIndex, bannerAds.length]); // Depend on currentAdIndex and bannerAds.length
+  }, [currentAdIndex, bannerAds.length]); 
 
   return (
     <View style={styles.container}>
-      {/* ScrollView for banner ads with ref attached */}
+
       <ScrollView
-        ref={bannerAdsRef} // Attach the ref here
+        ref={bannerAdsRef} 
         horizontal={true}
         style={styles.scrollView}
         showsHorizontalScrollIndicator={true}
@@ -97,7 +96,7 @@ const Home = ({ navigation }) => {
         ))}
       </ScrollView>
 
-      {/* The rest of your component rendering remains unchanged */}
+
       <View style={styles.recommendedHeader}>
         <Text style={styles.recommendedText}>Recommended for you</Text>
         <TouchableOpacity onPress={() => navigation.navigate("ViewAll")}>

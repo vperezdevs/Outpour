@@ -26,7 +26,7 @@ const Search = ({ navigation }) => {
         return;
       }
       const businessesRef = collection(db, "businesses");
-      const lowercaseQuery = searchQuery.toLowerCase(); // Convert search query to lowercase
+      const lowercaseQuery = searchQuery.toLowerCase(); 
       const q = query(
         businessesRef,
         where("name_lowercase", ">=", lowercaseQuery),
@@ -55,7 +55,7 @@ const Search = ({ navigation }) => {
             onChangeText={setSearchQuery}
           />
         </View>
-        {/* Dynamically generated search results */}
+
         <View style={styles.cardContainer}>
           {searchResults.map((business) => (
             <TouchableOpacity

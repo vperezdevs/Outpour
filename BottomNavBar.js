@@ -77,16 +77,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   navIcon: {
-    width: 25, // Set your desired icon size
+    width: 25,
     height: 25,
-    resizeMode: "contain", // Ensure the icons fit well
+    resizeMode: "contain", 
   },
   activeNavItem: {
-    // Add any styles you want for the active nav item
+
   },
   activeNavIcon: {
-    // If you want to change the icon or style for active state
-    // For example, tintColor: '#FF8A8A',
+
   },
 });
 
